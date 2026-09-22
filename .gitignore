@@ -42,3 +42,8 @@ node_modules/
 # Server-only files
 /favicon.ico
 /yandex_*.html
+
+# DEV runtime symlinks
+/bitrix
+/upload
+/marketplace

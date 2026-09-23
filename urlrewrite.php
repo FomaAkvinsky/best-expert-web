@@ -2,13 +2,21 @@
 $arUrlRewrite=array (
   0 =>
   array (
-    'CONDITION' => '#^/services/sudebnye-ekspertizy/([^/]+)/?$#',
-    'RULE' => 'ELEMENT_CODE=$1',
+    'CONDITION' => '#^/services/[^/]+/([^/]+)/?$#',
+    'RULE' => 'CODE=$1',
     'ID' => 'best:service.detail',
-    'PATH' => '/services/sudebnye-ekspertizy/detail.php',
-    'SORT' => 50,
+    'PATH' => '/services/element.php',
+    'SORT' => 10,
   ),
   1 =>
+  array (
+    'CONDITION' => '#^/services/([^/]+)/?$#',
+    'RULE' => 'CODE=$1',
+    'ID' => 'best:service.section',
+    'PATH' => '/services/section.php',
+    'SORT' => 20,
+  ),
+  2 =>
   array (
     'CONDITION' => '#^/rest/#',
     'RULE' => '',

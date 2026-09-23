@@ -21,7 +21,7 @@ final class Iblock
 
         $res = \CIBlock::GetList(
             ['ID' => 'ASC'],
-            ['=CODE' => $code, 'CHECK_PERMISSIONS' => 'N']
+            ['CODE' => $code, 'CHECK_PERMISSIONS' => 'N']
         );
 
         if ($row = $res->Fetch()) {
@@ -40,7 +40,7 @@ final class Iblock
 
         $res = \CIBlockSection::GetList(
             ['ID' => 'ASC'],
-            ['IBLOCK_ID' => $iblockId, '=CODE' => $code],
+            ['IBLOCK_ID' => $iblockId, 'CODE' => $code],
             false,
             ['ID']
         );

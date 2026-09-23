@@ -30,5 +30,13 @@ $intro = trim((string)($props['INTRO']['VALUE'] ?? ''));
                 </div>
             <?php endforeach; ?>
         </div>
+
+        <?php if (!empty($block['DETAIL_TEXT'])): ?>
+            <div class="row justify-content-center mt-4">
+                <div class="col-md-10 col-lg-9">
+                    <?=$block['DETAIL_TEXT']?>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </section>

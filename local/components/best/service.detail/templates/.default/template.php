@@ -5,6 +5,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
 }
 
 $service = $arResult['SERVICE'];
+$section = $arResult['SECTION'];
 $properties = $service['PROPERTIES'];
 $heroSubtitle = trim((string)($properties['HERO_SUBTITLE']['VALUE'] ?? ''));
 ?>
@@ -22,7 +23,7 @@ $heroSubtitle = trim((string)($properties['HERO_SUBTITLE']['VALUE'] ?? ''));
                     <ul class="brumbs-custom">
                         <li><a href="/">Главная</a></li>
                         <li><a href="/services/">Услуги</a></li>
-                        <li><a href="/services/sudebnye-ekspertizy/">Судебные экспертизы</a></li>
+                        <li><a href="/services/<?=htmlspecialcharsbx($section['CODE'])?>/"><?=htmlspecialcharsbx($section['NAME'])?></a></li>
                         <li class="active"><?=htmlspecialcharsbx($service['NAME'])?></li>
                     </ul>
 

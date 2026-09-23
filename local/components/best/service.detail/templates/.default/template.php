@@ -27,23 +27,44 @@ $heroSubtitle = trim((string)($properties['HERO_SUBTITLE']['VALUE'] ?? ''));
                         <li class="active"><?=htmlspecialcharsbx($service['NAME'])?></li>
                     </ul>
 
-                    <h1><?=htmlspecialcharsbx($service['NAME'])?></h1>
+                    <h1 class="wow fadeInUpSmall"><?=htmlspecialcharsbx($service['NAME'])?></h1>
+
                     <?php if ($heroSubtitle !== ''): ?>
-                        <p class="lead"><?=nl2br(htmlspecialcharsbx($heroSubtitle))?></p>
+                        <p class="lead wow fadeInUpSmall" data-wow-delay=".1s"><?=nl2br(htmlspecialcharsbx($heroSubtitle))?></p>
                     <?php endif; ?>
                 </div>
 
                 <div class="col-lg-4 text-center">
-                    <a class="button button-primary" href="#b24-form">Оставить запрос</a>
+                    <div class="wow fadeInUpSmall" data-wow-delay=".2s">
+                        <a class="button button-primary" href="#b24-form">Оставить запрос</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<?php foreach ($arResult['BLOCKS'] as $block): ?>
-    <?php
-    $type = preg_replace('/[^a-z0-9_-]/i', '', (string)$block['TYPE']);
+<?php
+$blocks = $arResult['BLOCKS'];
+$count = count($blocks);
+
+for ($i = 0; $i < $count; $i++):
+    $block = $blocks[$i];
+
+    if (($block['TYPE'] ?? '') === 'questions') {
+        $questionBlocks = [];
+
+        while ($i < $count && (($blocks[$i]['TYPE'] ?? '') === 'questions')) {
+            $questionBlocks[] = $blocks[$i];
+            $i++;
+        }
+
+        $i--;
+        include __DIR__ . '/blocks/questions-group.php';
+        continue;
+    }
+
+    $type = preg_replace('/[^a-z0-9_-]/i', '', (string)($block['TYPE'] ?? ''));
     $file = __DIR__ . '/blocks/' . $type . '.php';
 
     if (!$type || !is_file($file)) {
@@ -51,8 +72,8 @@ $heroSubtitle = trim((string)($properties['HERO_SUBTITLE']['VALUE'] ?? ''));
     }
 
     include $file;
-    ?>
-<?php endforeach; ?>
+endfor;
+?>
 
 <section class="section section-lg" id="b24-form">
     <div class="container">

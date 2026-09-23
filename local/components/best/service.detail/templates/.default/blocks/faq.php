@@ -7,7 +7,7 @@ $accordionId = 'accordion-best-' . (int)$block['ID'];
 <section class="section section-lg bg-gray-100">
     <div class="container">
         <div class="row row-40 justify-content-center">
-            <div class="col-md-10 col-lg-5">
+            <div class="col-md-10 col-lg-6 wow fadeInUpSmall">
                 <h3><?=htmlspecialcharsbx($block['NAME'])?></h3>
                 <div class="divider-modern"></div>
                 <?php if (!empty($props['INTRO']['VALUE'])): ?>
@@ -15,7 +15,7 @@ $accordionId = 'accordion-best-' . (int)$block['ID'];
                 <?php endif; ?>
             </div>
 
-            <div class="col-md-10 col-lg-7">
+            <div class="col-md-10 col-lg-6 wow fadeInUpSmall" data-wow-delay=".08s">
                 <div class="card-group-custom card-group-line" id="<?=$accordionId?>" role="tablist" aria-multiselectable="true">
                     <?php foreach ($questions as $i => $question): ?>
                         <?php $itemId = $accordionId . '-' . $i; ?>

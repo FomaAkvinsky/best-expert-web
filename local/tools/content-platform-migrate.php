@@ -353,31 +353,6 @@ $definitions = [
     ],
 ];
 
-$ids = [];
-foreach ($definitions as $key => $definition) {
-    $ids[$key] = ensureIblock($definition, $apply, $siteId);
-}
-
-if (!$apply) {
-    out('');
-    out($isCli
-        ? 'Dry run finished. Re-run with --apply to create missing objects.'
-        : 'Dry run finished. If the list is correct, click "Apply migration".'
-    );
-
-    if (!$isCli) {
-        echo '</pre></body></html>';
-    }
-
-    exit(0);
-}
-
-$serviceId = (int)$ids['best_services'];
-$blocksId = (int)$ids['best_service_blocks'];
-$documentsId = (int)$ids['best_documents'];
-
-ensureSection($serviceId, 'Судебные экспертизы', 'sudebnye-ekspertizy', 100, true);
-
 $serviceProperties = [
     ['NAME' => 'Подзаголовок первого экрана', 'CODE' => 'HERO_SUBTITLE', 'PROPERTY_TYPE' => 'S', 'SORT' => 100, 'ROW_COUNT' => 3],
     ['NAME' => 'SEO Title', 'CODE' => 'SEO_TITLE', 'PROPERTY_TYPE' => 'S', 'SORT' => 110],
@@ -386,10 +361,6 @@ $serviceProperties = [
     ['NAME' => 'OpenGraph Description', 'CODE' => 'OG_DESCRIPTION', 'PROPERTY_TYPE' => 'S', 'SORT' => 140, 'ROW_COUNT' => 3],
     ['NAME' => 'Иконка списка', 'CODE' => 'ICON', 'PROPERTY_TYPE' => 'S', 'SORT' => 150],
 ];
-
-foreach ($serviceProperties as $property) {
-    ensureProperty($serviceId, $property, true);
-}
 
 $blockTypes = [
     ['VALUE' => 'Профиль / смысловой блок', 'DEF' => 'Y', 'SORT' => 100, 'XML_ID' => 'profile'],
@@ -410,23 +381,6 @@ $layouts = [
     ['VALUE' => '4 колонки', 'DEF' => 'N', 'SORT' => 400, 'XML_ID' => '4'],
 ];
 
-$blockProperties = [
-    ['NAME' => 'Услуга', 'CODE' => 'SERVICE', 'PROPERTY_TYPE' => 'E', 'LINK_IBLOCK_ID' => $serviceId, 'SORT' => 100, 'IS_REQUIRED' => 'Y'],
-    ['NAME' => 'Тип блока', 'CODE' => 'BLOCK_TYPE', 'PROPERTY_TYPE' => 'L', 'VALUES' => $blockTypes, 'SORT' => 110, 'IS_REQUIRED' => 'Y'],
-    ['NAME' => 'Надзаголовок', 'CODE' => 'EYEBROW', 'PROPERTY_TYPE' => 'S', 'SORT' => 120],
-    ['NAME' => 'Вводный текст', 'CODE' => 'INTRO', 'PROPERTY_TYPE' => 'S', 'SORT' => 130, 'ROW_COUNT' => 5],
-    ['NAME' => 'Элементы блока', 'CODE' => 'ITEMS', 'PROPERTY_TYPE' => 'S', 'MULTIPLE' => 'Y', 'WITH_DESCRIPTION' => 'Y', 'SORT' => 140, 'ROW_COUNT' => 3],
-    ['NAME' => 'Количество колонок', 'CODE' => 'LAYOUT', 'PROPERTY_TYPE' => 'L', 'VALUES' => $layouts, 'SORT' => 150],
-    ['NAME' => 'Документы', 'CODE' => 'DOCUMENTS', 'PROPERTY_TYPE' => 'E', 'LINK_IBLOCK_ID' => $documentsId, 'MULTIPLE' => 'Y', 'SORT' => 160],
-    ['NAME' => 'Якорь', 'CODE' => 'ANCHOR', 'PROPERTY_TYPE' => 'S', 'SORT' => 170],
-    ['NAME' => 'Текст кнопки', 'CODE' => 'CTA_LABEL', 'PROPERTY_TYPE' => 'S', 'SORT' => 180],
-    ['NAME' => 'Ссылка кнопки', 'CODE' => 'CTA_URL', 'PROPERTY_TYPE' => 'S', 'SORT' => 190],
-];
-
-foreach ($blockProperties as $property) {
-    ensureProperty($blocksId, $property, true);
-}
-
 $documentTypes = [
     ['VALUE' => 'ФЭСЭ', 'DEF' => 'N', 'SORT' => 100, 'XML_ID' => 'fese'],
     ['VALUE' => 'СРО / НОПРИЗ', 'DEF' => 'N', 'SORT' => 200, 'XML_ID' => 'sro'],
@@ -446,12 +400,78 @@ $documentProperties = [
     ['NAME' => 'Ссылка на официальный реестр', 'CODE' => 'EXTERNAL_URL', 'PROPERTY_TYPE' => 'S', 'SORT' => 170],
 ];
 
-foreach ($documentProperties as $property) {
-    ensureProperty($documentsId, $property, true);
+$siteId = defaultSiteId();
+
+out('BEST content platform migration');
+out('Mode: ' . ($apply ? 'APPLY' : 'DRY RUN'));
+out('Site: ' . $siteId);
+out('');
+
+ensureIblockType('best_content', $apply);
+
+$ids = [];
+foreach ($definitions as $key => $definition) {
+    $ids[$key] = ensureIblock($definition, $apply, $siteId);
+}
+
+$serviceId = $ids['best_services'] ? (int)$ids['best_services'] : null;
+$blocksId = $ids['best_service_blocks'] ? (int)$ids['best_service_blocks'] : null;
+$documentsId = $ids['best_documents'] ? (int)$ids['best_documents'] : null;
+
+if ($serviceId) {
+    ensureSection($serviceId, 'Судебные экспертизы', 'sudebnye-ekspertizy', 100, $apply);
+    foreach ($serviceProperties as $property) {
+        ensureProperty($serviceId, $property, $apply);
+    }
+} else {
+    out('[new] section: sudebnye-ekspertizy');
+    foreach ($serviceProperties as $property) {
+        out('  [new] property: ' . $property['CODE']);
+    }
+}
+
+$blockProperties = [
+    ['NAME' => 'Услуга', 'CODE' => 'SERVICE', 'PROPERTY_TYPE' => 'E', 'LINK_IBLOCK_ID' => $serviceId ?: 0, 'SORT' => 100, 'IS_REQUIRED' => 'Y'],
+    ['NAME' => 'Тип блока', 'CODE' => 'BLOCK_TYPE', 'PROPERTY_TYPE' => 'L', 'VALUES' => $blockTypes, 'SORT' => 110, 'IS_REQUIRED' => 'Y'],
+    ['NAME' => 'Надзаголовок', 'CODE' => 'EYEBROW', 'PROPERTY_TYPE' => 'S', 'SORT' => 120],
+    ['NAME' => 'Вводный текст', 'CODE' => 'INTRO', 'PROPERTY_TYPE' => 'S', 'SORT' => 130, 'ROW_COUNT' => 5],
+    ['NAME' => 'Элементы блока', 'CODE' => 'ITEMS', 'PROPERTY_TYPE' => 'S', 'MULTIPLE' => 'Y', 'WITH_DESCRIPTION' => 'Y', 'SORT' => 140, 'ROW_COUNT' => 3],
+    ['NAME' => 'Количество колонок', 'CODE' => 'LAYOUT', 'PROPERTY_TYPE' => 'L', 'VALUES' => $layouts, 'SORT' => 150],
+    ['NAME' => 'Документы', 'CODE' => 'DOCUMENTS', 'PROPERTY_TYPE' => 'E', 'LINK_IBLOCK_ID' => $documentsId ?: 0, 'MULTIPLE' => 'Y', 'SORT' => 160],
+    ['NAME' => 'Якорь', 'CODE' => 'ANCHOR', 'PROPERTY_TYPE' => 'S', 'SORT' => 170],
+    ['NAME' => 'Текст кнопки', 'CODE' => 'CTA_LABEL', 'PROPERTY_TYPE' => 'S', 'SORT' => 180],
+    ['NAME' => 'Ссылка кнопки', 'CODE' => 'CTA_URL', 'PROPERTY_TYPE' => 'S', 'SORT' => 190],
+];
+
+if ($blocksId) {
+    foreach ($blockProperties as $property) {
+        ensureProperty($blocksId, $property, $apply);
+    }
+} else {
+    foreach ($blockProperties as $property) {
+        out('  [new] property: ' . $property['CODE']);
+    }
+}
+
+if ($documentsId) {
+    foreach ($documentProperties as $property) {
+        ensureProperty($documentsId, $property, $apply);
+    }
+} else {
+    foreach ($documentProperties as $property) {
+        out('  [new] property: ' . $property['CODE']);
+    }
 }
 
 out('');
-out('Migration completed successfully.');
+if ($apply) {
+    out('Migration completed successfully.');
+} else {
+    out($isCli
+        ? 'Dry run finished. Re-run with --apply to create missing objects.'
+        : 'Dry run finished. If the list is correct, click "Apply migration".'
+    );
+}
 
 if (!$isCli) {
     echo '</pre></body></html>';

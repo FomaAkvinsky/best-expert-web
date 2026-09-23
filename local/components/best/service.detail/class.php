@@ -2,7 +2,6 @@
 
 use Best\Content\Iblock;
 use Bitrix\Main\Loader;
-use Bitrix\Main\SystemException;
 
 if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
     die();
@@ -14,7 +13,7 @@ class BestServiceDetailComponent extends CBitrixComponent
     {
         $params['IBLOCK_CODE'] = trim((string)($params['IBLOCK_CODE'] ?? 'best_services'));
         $params['BLOCKS_IBLOCK_CODE'] = trim((string)($params['BLOCKS_IBLOCK_CODE'] ?? 'best_service_blocks'));
-        $params['ELEMENT_CODE'] = trim((string)($params['ELEMENT_CODE'] ?? ''));
+        $params['CODE'] = trim((string)($params['CODE'] ?? ($params['ELEMENT_CODE'] ?? '')));
         $params['CACHE_TIME'] = (int)($params['CACHE_TIME'] ?? 3600);
 
         return $params;
@@ -27,7 +26,7 @@ class BestServiceDetailComponent extends CBitrixComponent
             return;
         }
 
-        if ($this->arParams['ELEMENT_CODE'] === '') {
+        if ($this->arParams['CODE'] === '') {
             $this->set404();
             return;
         }
@@ -36,13 +35,13 @@ class BestServiceDetailComponent extends CBitrixComponent
             if ($this->startResultCache()) {
                 $this->arResult = $this->loadData();
 
-                if (!$this->arResult['SERVICE']) {
+                if (!$this->arResult['SERVICE'] || !$this->arResult['SECTION']) {
                     $this->abortResultCache();
                     $this->set404();
                     return;
                 }
 
-                $this->setResultCacheKeys(['SERVICE']);
+                $this->setResultCacheKeys(['SERVICE', 'SECTION']);
                 $this->includeComponentTemplate();
             }
 
@@ -63,13 +62,13 @@ class BestServiceDetailComponent extends CBitrixComponent
             [],
             [
                 'IBLOCK_ID' => $serviceIblockId,
-                '=CODE' => $this->arParams['ELEMENT_CODE'],
+                'CODE' => $this->arParams['CODE'],
                 'ACTIVE' => 'Y',
                 'ACTIVE_DATE' => 'Y',
             ],
             false,
             ['nTopCount' => 1],
-            ['ID', 'IBLOCK_ID', 'IBLOCK_SECTION_ID', 'NAME', 'CODE', 'PREVIEW_TEXT', 'DETAIL_TEXT', 'DETAIL_PAGE_URL']
+            ['ID', 'IBLOCK_ID', 'IBLOCK_SECTION_ID', 'NAME', 'CODE', 'PREVIEW_TEXT', 'DETAIL_TEXT']
         );
 
         if ($element = $res->GetNextElement()) {
@@ -78,7 +77,22 @@ class BestServiceDetailComponent extends CBitrixComponent
         }
 
         if (!$service) {
-            return ['SERVICE' => null, 'BLOCKS' => []];
+            return ['SERVICE' => null, 'SECTION' => null, 'BLOCKS' => []];
+        }
+
+        $section = null;
+        if ((int)$service['IBLOCK_SECTION_ID'] > 0) {
+            $sectionRes = CIBlockSection::GetList(
+                [],
+                [
+                    'IBLOCK_ID' => $serviceIblockId,
+                    'ID' => (int)$service['IBLOCK_SECTION_ID'],
+                    'ACTIVE' => 'Y',
+                ],
+                false,
+                ['ID', 'IBLOCK_ID', 'NAME', 'CODE']
+            );
+            $section = $sectionRes->Fetch() ?: null;
         }
 
         $blocks = [];
@@ -105,6 +119,7 @@ class BestServiceDetailComponent extends CBitrixComponent
 
         return [
             'SERVICE' => $service,
+            'SECTION' => $section,
             'BLOCKS' => $blocks,
         ];
     }
@@ -151,13 +166,14 @@ class BestServiceDetailComponent extends CBitrixComponent
 
     private function applyMeta(): void
     {
-        if (empty($this->arResult['SERVICE'])) {
+        if (empty($this->arResult['SERVICE']) || empty($this->arResult['SECTION'])) {
             return;
         }
 
         global $APPLICATION;
 
         $service = $this->arResult['SERVICE'];
+        $section = $this->arResult['SECTION'];
         $props = $service['PROPERTIES'];
 
         $title = Iblock::scalarProperty($props['SEO_TITLE'] ?? []) ?: $service['NAME'] . ' | БЭСТ';
@@ -165,20 +181,21 @@ class BestServiceDetailComponent extends CBitrixComponent
         $ogTitle = Iblock::scalarProperty($props['OG_TITLE'] ?? []) ?: $title;
         $ogDescription = Iblock::scalarProperty($props['OG_DESCRIPTION'] ?? []) ?: $description;
 
+        $APPLICATION->SetTitle((string)$service['NAME']);
         $APPLICATION->SetPageProperty('title', $title);
+
         if ($description !== '') {
             $APPLICATION->SetPageProperty('description', $description);
         }
 
         $APPLICATION->SetPageProperty('og_title', $ogTitle);
         $APPLICATION->SetPageProperty('og_description', $ogDescription);
-
-        $canonical = 'https://' . $_SERVER['HTTP_HOST']
-            . '/services/sudebnye-ekspertizy/'
-            . rawurlencode($service['CODE'])
-            . '/';
-
-        $APPLICATION->SetPageProperty('canonical', $canonical);
+        $APPLICATION->SetPageProperty(
+            'canonical',
+            'https://' . $_SERVER['HTTP_HOST']
+            . '/services/' . rawurlencode((string)$section['CODE'])
+            . '/' . rawurlencode((string)$service['CODE']) . '/'
+        );
     }
 
     private function set404(): void

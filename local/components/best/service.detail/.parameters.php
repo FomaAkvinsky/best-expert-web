@@ -18,6 +18,12 @@ $arComponentParameters = [
             'TYPE' => 'STRING',
             'DEFAULT' => 'best_service_blocks',
         ],
+        'SECTION_CODE' => [
+            'PARENT' => 'BASE',
+            'NAME' => 'Символьный код родительского раздела',
+            'TYPE' => 'STRING',
+            'DEFAULT' => '={$_REQUEST["SECTION_CODE"]}',
+        ],
         'CODE' => [
             'PARENT' => 'BASE',
             'NAME' => 'Символьный код услуги',

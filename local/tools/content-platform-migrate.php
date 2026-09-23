@@ -511,6 +511,12 @@ if ($serviceId) {
     }
 }
 
+$blockViews = [
+    ['VALUE' => 'Обычные карточки', 'DEF' => 'Y', 'SORT' => 100, 'XML_ID' => 'cards'],
+    ['VALUE' => 'Link-box: основной блок', 'DEF' => 'N', 'SORT' => 200, 'XML_ID' => 'link-boxes-main'],
+    ['VALUE' => 'Link-box: компактная группа', 'DEF' => 'N', 'SORT' => 300, 'XML_ID' => 'link-boxes-compact'],
+];
+
 $blockProperties = [
     ['NAME' => 'Услуга', 'CODE' => 'SERVICE', 'PROPERTY_TYPE' => 'E', 'LINK_IBLOCK_ID' => $serviceId ?: 0, 'SORT' => 100, 'IS_REQUIRED' => 'Y'],
     ['NAME' => 'Тип блока', 'CODE' => 'BLOCK_TYPE', 'PROPERTY_TYPE' => 'L', 'VALUES' => $blockTypes, 'SORT' => 110, 'IS_REQUIRED' => 'Y'],
@@ -518,6 +524,10 @@ $blockProperties = [
     ['NAME' => 'Вводный текст', 'CODE' => 'INTRO', 'PROPERTY_TYPE' => 'S', 'SORT' => 130, 'ROW_COUNT' => 5],
     ['NAME' => 'Элементы блока', 'CODE' => 'ITEMS', 'PROPERTY_TYPE' => 'S', 'MULTIPLE' => 'Y', 'WITH_DESCRIPTION' => 'Y', 'SORT' => 140, 'ROW_COUNT' => 3],
     ['NAME' => 'Количество колонок', 'CODE' => 'LAYOUT', 'PROPERTY_TYPE' => 'L', 'VALUES' => $layouts, 'SORT' => 150],
+    ['NAME' => 'Вариант отображения', 'CODE' => 'VIEW', 'PROPERTY_TYPE' => 'L', 'VALUES' => $blockViews, 'SORT' => 155],
+    ['NAME' => 'Подзаголовок блока', 'CODE' => 'SUBTITLE', 'PROPERTY_TYPE' => 'S', 'SORT' => 156],
+    ['NAME' => 'Текст подзаголовка', 'CODE' => 'SUBINTRO', 'PROPERTY_TYPE' => 'S', 'SORT' => 157, 'ROW_COUNT' => 4],
+    ['NAME' => 'Иконки элементов', 'CODE' => 'ITEM_ICONS', 'PROPERTY_TYPE' => 'S', 'MULTIPLE' => 'Y', 'SORT' => 158],
     ['NAME' => 'Документы', 'CODE' => 'DOCUMENTS', 'PROPERTY_TYPE' => 'E', 'LINK_IBLOCK_ID' => $documentsId ?: 0, 'MULTIPLE' => 'Y', 'SORT' => 160],
     ['NAME' => 'Якорь', 'CODE' => 'ANCHOR', 'PROPERTY_TYPE' => 'S', 'SORT' => 170],
     ['NAME' => 'Текст кнопки', 'CODE' => 'CTA_LABEL', 'PROPERTY_TYPE' => 'S', 'SORT' => 180],

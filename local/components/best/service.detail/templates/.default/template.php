@@ -46,20 +46,23 @@ $heroSubtitle = trim((string)($properties['HERO_SUBTITLE']['VALUE'] ?? ''));
 
 <?php
 $blocks = $arResult['BLOCKS'];
-$count = count($blocks);
+$blockCount = count($blocks);
 
-for ($i = 0; $i < $count; $i++):
-    $block = $blocks[$i];
+for ($blockIndex = 0; $blockIndex < $blockCount; $blockIndex++):
+    $block = $blocks[$blockIndex];
 
     if (($block['TYPE'] ?? '') === 'questions') {
         $questionBlocks = [];
 
-        while ($i < $count && (($blocks[$i]['TYPE'] ?? '') === 'questions')) {
-            $questionBlocks[] = $blocks[$i];
-            $i++;
+        while (
+            $blockIndex < $blockCount
+            && (($blocks[$blockIndex]['TYPE'] ?? '') === 'questions')
+        ) {
+            $questionBlocks[] = $blocks[$blockIndex];
+            $blockIndex++;
         }
 
-        $i--;
+        $blockIndex--;
         include __DIR__ . '/blocks/questions-group.php';
         continue;
     }

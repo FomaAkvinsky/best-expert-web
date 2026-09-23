@@ -316,15 +316,6 @@ function ensureSection(int $iblockId, string $name, string $code, int $sort, boo
     }
 }
 
-$siteId = defaultSiteId();
-
-out('BEST content platform migration');
-out('Mode: ' . ($apply ? 'APPLY' : 'DRY RUN'));
-out('Site: ' . $siteId);
-out('');
-
-ensureIblockType('best_content', $apply);
-
 $definitions = [
     'best_services' => [
         'NAME' => 'БЭСТ: услуги',

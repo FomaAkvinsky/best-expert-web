@@ -18,11 +18,11 @@ $arComponentParameters = [
             'TYPE' => 'STRING',
             'DEFAULT' => 'best_service_blocks',
         ],
-        'ELEMENT_CODE' => [
+        'CODE' => [
             'PARENT' => 'BASE',
             'NAME' => 'Символьный код услуги',
             'TYPE' => 'STRING',
-            'DEFAULT' => '={$_REQUEST["ELEMENT_CODE"]}',
+            'DEFAULT' => '={$_REQUEST["CODE"]}',
         ],
         'CACHE_TIME' => ['DEFAULT' => 3600],
     ],

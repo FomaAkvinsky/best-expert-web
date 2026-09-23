@@ -35,6 +35,94 @@ if (!$isCli) {
     }
 }
 
+if (!Loader::includeModule('iblock')) {
+    if ($isCli) {
+        fwrite(STDERR, "Bitrix module 'iblock' is not available.\n");
+    } else {
+        http_response_code(500);
+        echo 'Bitrix module "iblock" is not available.';
+    }
+    exit(1);
+}
+
+$apply = $isCli
+    ? in_array('--apply', $argv, true)
+    : ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['mode'] ?? '') === 'apply');
+
+if (!$isCli && $apply && !check_bitrix_sessid()) {
+    http_response_code(403);
+    echo 'Invalid Bitrix session.';
+    exit;
+}
+
+if (!$isCli) {
+    ?>
+    <!doctype html>
+    <html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>БЭСТ — миграция контентной платформы</title>
+        <style>
+            body{font-family:Arial,sans-serif;max-width:1100px;margin:40px auto;padding:0 20px;color:#222}
+            h1{margin-bottom:8px}.muted{color:#666}
+            .panel{border:1px solid #ddd;padding:20px;margin:24px 0;background:#fafafa}
+            .warning{border-left:4px solid #d8a100;padding:12px 16px;background:#fff8df;margin:18px 0}
+            button{padding:10px 18px;border:0;background:#222;color:#fff;cursor:pointer;font-size:15px}
+            a.button{display:inline-block;padding:10px 18px;border:1px solid #222;color:#222;text-decoration:none;margin-right:10px}
+            pre{background:#111;color:#eee;padding:18px;overflow:auto;line-height:1.45;white-space:pre-wrap}
+            .apply{background:#8a1f11}
+        </style>
+    </head>
+    <body>
+        <h1>БЭСТ — миграция контентной платформы</h1>
+        <p class="muted">Скрипт создаёт только отсутствующие типы инфоблоков, инфоблоки, свойства и разделы.</p>
+
+        <div class="warning">
+            <strong>Режим APPLY меняет текущую базу данных Bitrix.</strong>
+            Сначала выполните dry-run и проверьте список изменений.
+        </div>
+
+        <div class="panel">
+            <a class="button" href="<?=htmlspecialcharsbx($_SERVER['PHP_SELF'])?>">Dry-run</a>
+            <form method="post" style="display:inline" onsubmit="return confirm('Создать отсутствующие объекты в текущей БД?');">
+                <?=bitrix_sessid_post()?>
+                <input type="hidden" name="mode" value="apply">
+                <button class="apply" type="submit">Apply migration</button>
+            </form>
+        </div>
+
+        <h2>Результат</h2>
+        <pre>
+    <?php
+}
+
+function out(string $message): void
+{
+    global $isCli;
+
+    if ($isCli) {
+        fwrite(STDOUT, $message . PHP_EOL);
+        return;
+    }
+
+    echo htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n";
+}
+
+function fail(string $message): void
+{
+    global $isCli;
+
+    if ($isCli) {
+        fwrite(STDERR, 'ERROR: ' . $message . PHP_EOL);
+    } else {
+        echo htmlspecialchars('ERROR: ' . $message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8') . "\n";
+        echo '</pre></body></html>';
+    }
+
+    exit(1);
+}
+
 function defaultSiteId(): string
 {
     $by = 'sort';

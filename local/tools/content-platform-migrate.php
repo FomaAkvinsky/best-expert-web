@@ -123,6 +123,76 @@ function fail(string $message): void
     exit(1);
 }
 
+function findSectionUserField(string $entityId, string $fieldName): ?array
+{
+    $res = CUserTypeEntity::GetList(
+        ['ID' => 'ASC'],
+        ['ENTITY_ID' => $entityId, 'FIELD_NAME' => $fieldName]
+    );
+
+    $row = $res->Fetch();
+    return $row ?: null;
+}
+
+function ensureSectionUserField(string $entityId, array $definition, bool $apply): void
+{
+    $existing = findSectionUserField($entityId, $definition['FIELD_NAME']);
+
+    if ($existing) {
+        out(sprintf('  [ok] section field: %s (#%d)', $definition['FIELD_NAME'], $existing['ID']));
+        return;
+    }
+
+    out('  [new] section field: ' . $definition['FIELD_NAME']);
+
+    if (!$apply) {
+        return;
+    }
+
+    $field = new CUserTypeEntity();
+    $id = $field->Add([
+        'ENTITY_ID' => $entityId,
+        'FIELD_NAME' => $definition['FIELD_NAME'],
+        'USER_TYPE_ID' => 'string',
+        'XML_ID' => $definition['FIELD_NAME'],
+        'SORT' => $definition['SORT'] ?? 500,
+        'MULTIPLE' => 'N',
+        'MANDATORY' => 'N',
+        'SHOW_FILTER' => 'N',
+        'SHOW_IN_LIST' => 'Y',
+        'EDIT_IN_LIST' => 'Y',
+        'IS_SEARCHABLE' => 'N',
+        'EDIT_FORM_LABEL' => [
+            'ru' => $definition['NAME'],
+            'en' => $definition['NAME'],
+        ],
+        'LIST_COLUMN_LABEL' => [
+            'ru' => $definition['NAME'],
+            'en' => $definition['NAME'],
+        ],
+        'LIST_FILTER_LABEL' => [
+            'ru' => $definition['NAME'],
+            'en' => $definition['NAME'],
+        ],
+        'ERROR_MESSAGE' => [
+            'ru' => '',
+            'en' => '',
+        ],
+        'HELP_MESSAGE' => [
+            'ru' => '',
+            'en' => '',
+        ],
+        'SETTINGS' => [
+            'SIZE' => 80,
+            'ROWS' => $definition['ROWS'] ?? 1,
+        ],
+    ]);
+
+    if (!$id) {
+        fail('Cannot create section user field ' . $definition['FIELD_NAME']);
+    }
+}
+
 function defaultSiteId(): string
 {
     $by = 'sort';
@@ -353,6 +423,15 @@ $serviceProperties = [
     ['NAME' => 'Иконка списка', 'CODE' => 'ICON', 'PROPERTY_TYPE' => 'S', 'SORT' => 150],
 ];
 
+$sectionUserFields = [
+    ['NAME' => 'Подзаголовок первого экрана', 'FIELD_NAME' => 'UF_HERO_SUBTITLE', 'SORT' => 100, 'ROWS' => 4],
+    ['NAME' => 'Заголовок вводного блока', 'FIELD_NAME' => 'UF_INTRO_TITLE', 'SORT' => 110],
+    ['NAME' => 'Текст вводного блока', 'FIELD_NAME' => 'UF_INTRO_TEXT', 'SORT' => 120, 'ROWS' => 6],
+    ['NAME' => 'Надзаголовок списка направлений', 'FIELD_NAME' => 'UF_LIST_EYEBROW', 'SORT' => 130],
+    ['NAME' => 'Заголовок списка направлений', 'FIELD_NAME' => 'UF_LIST_TITLE', 'SORT' => 140],
+    ['NAME' => 'Вводный текст списка направлений', 'FIELD_NAME' => 'UF_LIST_INTRO', 'SORT' => 150, 'ROWS' => 4],
+];
+
 $blockTypes = [
     ['VALUE' => 'Профиль / смысловой блок', 'DEF' => 'Y', 'SORT' => 100, 'XML_ID' => 'profile'],
     ['VALUE' => 'Карточки', 'DEF' => 'N', 'SORT' => 200, 'XML_ID' => 'cards'],
@@ -411,13 +490,24 @@ $documentsId = $ids['best_documents'] ? (int)$ids['best_documents'] : null;
 
 if ($serviceId) {
     ensureSection($serviceId, 'Судебные экспертизы', 'sudebnye-ekspertizy', 100, $apply);
+
     foreach ($serviceProperties as $property) {
         ensureProperty($serviceId, $property, $apply);
     }
+
+    $sectionEntityId = 'IBLOCK_' . $serviceId . '_SECTION';
+    foreach ($sectionUserFields as $field) {
+        ensureSectionUserField($sectionEntityId, $field, $apply);
+    }
 } else {
     out('[new] section: sudebnye-ekspertizy');
+
     foreach ($serviceProperties as $property) {
         out('  [new] property: ' . $property['CODE']);
+    }
+
+    foreach ($sectionUserFields as $field) {
+        out('  [new] section field: ' . $field['FIELD_NAME']);
     }
 }
 

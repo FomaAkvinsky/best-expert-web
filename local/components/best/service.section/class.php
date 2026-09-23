@@ -40,7 +40,7 @@ class BestServiceSectionComponent extends CBitrixComponent
                     return;
                 }
 
-                $this->setResultCacheKeys(['SECTION']);
+                $this->setResultCacheKeys(['SECTION', 'CHILD_SECTIONS']);
                 $this->includeComponentTemplate();
             }
 
@@ -61,16 +61,52 @@ class BestServiceSectionComponent extends CBitrixComponent
                 'IBLOCK_ID' => $iblockId,
                 'CODE' => $this->arParams['CODE'],
                 'ACTIVE' => 'Y',
+                'SECTION_ID' => false,
             ],
             false,
-            ['ID', 'IBLOCK_ID', 'NAME', 'CODE', 'DESCRIPTION', 'DESCRIPTION_TYPE']
+            [
+                'ID',
+                'IBLOCK_ID',
+                'IBLOCK_SECTION_ID',
+                'DEPTH_LEVEL',
+                'NAME',
+                'CODE',
+                'DESCRIPTION',
+                'DESCRIPTION_TYPE',
+                'UF_*',
+            ]
         );
 
         $section = $res->Fetch() ?: null;
 
+        if (!$section) {
+            return [
+                'IBLOCK_ID' => $iblockId,
+                'SECTION' => null,
+                'CHILD_SECTIONS' => [],
+            ];
+        }
+
+        $children = [];
+        $childRes = CIBlockSection::GetList(
+            ['SORT' => 'ASC', 'ID' => 'ASC'],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'SECTION_ID' => (int)$section['ID'],
+                'ACTIVE' => 'Y',
+            ],
+            false,
+            ['ID', 'IBLOCK_ID', 'IBLOCK_SECTION_ID', 'NAME', 'CODE', 'SORT', 'DESCRIPTION', 'DESCRIPTION_TYPE']
+        );
+
+        while ($child = $childRes->Fetch()) {
+            $children[] = $child;
+        }
+
         return [
             'IBLOCK_ID' => $iblockId,
             'SECTION' => $section,
+            'CHILD_SECTIONS' => $children,
         ];
     }
 
@@ -83,7 +119,7 @@ class BestServiceSectionComponent extends CBitrixComponent
         global $APPLICATION;
 
         $section = $this->arResult['SECTION'];
-        $description = trim(strip_tags((string)($section['DESCRIPTION'] ?? '')));
+        $description = trim(strip_tags((string)($section['UF_HERO_SUBTITLE'] ?? $section['DESCRIPTION'] ?? '')));
 
         $APPLICATION->SetTitle((string)$section['NAME']);
         $APPLICATION->SetPageProperty('title', $section['NAME'] . ' | БЭСТ');

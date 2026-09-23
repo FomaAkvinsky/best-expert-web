@@ -14,7 +14,13 @@ $arComponentParameters = [
         ],
         'SECTION_CODE' => [
             'PARENT' => 'BASE',
-            'NAME' => 'Код раздела',
+            'NAME' => 'Код раздела отбора',
+            'TYPE' => 'STRING',
+            'DEFAULT' => '',
+        ],
+        'ROUTE_SECTION_CODE' => [
+            'PARENT' => 'BASE',
+            'NAME' => 'Код публичной категории для ссылок',
             'TYPE' => 'STRING',
             'DEFAULT' => '',
         ],

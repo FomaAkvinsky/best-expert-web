@@ -118,6 +118,7 @@ class BestServiceDetailComponent extends CBitrixComponent
             $block['PROPERTIES'] = $blockElement->GetProperties();
             $block['TYPE'] = $this->listXmlId($block['PROPERTIES']['BLOCK_TYPE'] ?? []);
             $block['LAYOUT'] = $this->listXmlId($block['PROPERTIES']['LAYOUT'] ?? []);
+            $block['VIEW'] = $this->listXmlId($block['PROPERTIES']['VIEW'] ?? []);
             $block['DOCUMENT_ITEMS'] = $this->loadDocuments($block['PROPERTIES']['DOCUMENTS']['VALUE'] ?? []);
             $blocks[] = $block;
         }

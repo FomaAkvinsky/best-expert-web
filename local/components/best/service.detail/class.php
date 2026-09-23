@@ -13,7 +13,8 @@ class BestServiceDetailComponent extends CBitrixComponent
     {
         $params['IBLOCK_CODE'] = trim((string)($params['IBLOCK_CODE'] ?? 'best_services'));
         $params['BLOCKS_IBLOCK_CODE'] = trim((string)($params['BLOCKS_IBLOCK_CODE'] ?? 'best_service_blocks'));
-        $params['CODE'] = trim((string)($params['CODE'] ?? ($params['ELEMENT_CODE'] ?? '')));
+        $params['SECTION_CODE'] = trim((string)($params['SECTION_CODE'] ?? ''));
+        $params['CODE'] = trim((string)($params['CODE'] ?? ''));
         $params['CACHE_TIME'] = (int)($params['CACHE_TIME'] ?? 3600);
 
         return $params;
@@ -26,7 +27,7 @@ class BestServiceDetailComponent extends CBitrixComponent
             return;
         }
 
-        if ($this->arParams['CODE'] === '') {
+        if ($this->arParams['SECTION_CODE'] === '' || $this->arParams['CODE'] === '') {
             $this->set404();
             return;
         }
@@ -57,11 +58,30 @@ class BestServiceDetailComponent extends CBitrixComponent
         $serviceIblockId = Iblock::idByCode($this->arParams['IBLOCK_CODE']);
         $blocksIblockId = Iblock::idByCode($this->arParams['BLOCKS_IBLOCK_CODE']);
 
+        $sectionRes = CIBlockSection::GetList(
+            [],
+            [
+                'IBLOCK_ID' => $serviceIblockId,
+                'CODE' => $this->arParams['SECTION_CODE'],
+                'ACTIVE' => 'Y',
+            ],
+            false,
+            ['ID', 'IBLOCK_ID', 'NAME', 'CODE']
+        );
+
+        $section = $sectionRes->Fetch() ?: null;
+
+        if (!$section) {
+            return ['SERVICE' => null, 'SECTION' => null, 'BLOCKS' => []];
+        }
+
         $service = null;
         $res = CIBlockElement::GetList(
             [],
             [
                 'IBLOCK_ID' => $serviceIblockId,
+                'SECTION_ID' => (int)$section['ID'],
+                'INCLUDE_SUBSECTIONS' => 'N',
                 'CODE' => $this->arParams['CODE'],
                 'ACTIVE' => 'Y',
                 'ACTIVE_DATE' => 'Y',
@@ -77,22 +97,7 @@ class BestServiceDetailComponent extends CBitrixComponent
         }
 
         if (!$service) {
-            return ['SERVICE' => null, 'SECTION' => null, 'BLOCKS' => []];
-        }
-
-        $section = null;
-        if ((int)$service['IBLOCK_SECTION_ID'] > 0) {
-            $sectionRes = CIBlockSection::GetList(
-                [],
-                [
-                    'IBLOCK_ID' => $serviceIblockId,
-                    'ID' => (int)$service['IBLOCK_SECTION_ID'],
-                    'ACTIVE' => 'Y',
-                ],
-                false,
-                ['ID', 'IBLOCK_ID', 'NAME', 'CODE']
-            );
-            $section = $sectionRes->Fetch() ?: null;
+            return ['SERVICE' => null, 'SECTION' => $section, 'BLOCKS' => []];
         }
 
         $blocks = [];

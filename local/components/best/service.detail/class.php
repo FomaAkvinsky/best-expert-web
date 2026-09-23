@@ -183,11 +183,19 @@ class BestServiceDetailComponent extends CBitrixComponent
 
     private function set404(): void
     {
+        global $APPLICATION;
+
         CHTTP::SetStatus('404 Not Found');
         @define('ERROR_404', 'Y');
 
-        if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/404.php')) {
-            require $_SERVER['DOCUMENT_ROOT'] . '/404.php';
-        }
+        $APPLICATION->SetTitle('Страница не найдена');
+        $APPLICATION->SetPageProperty('title', '404 Not Found');
+
+        echo '<section class="my-5 py-5">';
+        echo '<div class="container text-center" style="min-height:45vh">';
+        echo '<div class="row justify-content-center"><div class="col-lg-10 col-xl-8">';
+        echo '<p class="h1 text-dark text-center">404 Not Found</p>';
+        echo '<p class="text-center">Извините, страница не найдена.</p>';
+        echo '</div></div></div></section>';
     }
 }

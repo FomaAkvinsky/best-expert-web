@@ -14,6 +14,7 @@ class BestServiceListComponent extends CBitrixComponent
     {
         $params['IBLOCK_CODE'] = trim((string)($params['IBLOCK_CODE'] ?? 'best_services'));
         $params['SECTION_CODE'] = trim((string)($params['SECTION_CODE'] ?? ''));
+        $params['ROUTE_SECTION_CODE'] = trim((string)($params['ROUTE_SECTION_CODE'] ?? ''));
         $params['CACHE_TIME'] = (int)($params['CACHE_TIME'] ?? 3600);
 
         return $params;
@@ -48,15 +49,18 @@ class BestServiceListComponent extends CBitrixComponent
 
         if ($this->arParams['SECTION_CODE'] !== '') {
             $sectionId = Iblock::sectionIdByCode($iblockId, $this->arParams['SECTION_CODE']);
+
             if (!$sectionId) {
                 throw new SystemException('Раздел услуг не найден: ' . $this->arParams['SECTION_CODE']);
             }
+
             $filter['SECTION_ID'] = $sectionId;
-            $filter['INCLUDE_SUBSECTIONS'] = 'Y';
+            $filter['INCLUDE_SUBSECTIONS'] = 'N';
         }
 
         $result = [
             'IBLOCK_ID' => $iblockId,
+            'ROUTE_SECTION_CODE' => $this->arParams['ROUTE_SECTION_CODE'],
             'ITEMS' => [],
         ];
 
@@ -65,7 +69,7 @@ class BestServiceListComponent extends CBitrixComponent
             $filter,
             false,
             false,
-            ['ID', 'IBLOCK_ID', 'NAME', 'CODE', 'SORT', 'PREVIEW_TEXT', 'DETAIL_PAGE_URL', 'PROPERTY_ICON']
+            ['ID', 'IBLOCK_ID', 'NAME', 'CODE', 'SORT', 'PREVIEW_TEXT', 'PREVIEW_TEXT_TYPE', 'PROPERTY_ICON']
         );
 
         while ($row = $res->GetNext()) {

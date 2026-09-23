@@ -395,6 +395,39 @@ $APPLICATION->SetPageProperty('og_description','Мы проводим судеб
   </div>
 </section>
 
+<!-- PROFESSIONAL STATUS -->
+<section class="section section-lg bg-gray-100">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8 text-center">
+        <h6 class="wow fadeInUpSmall">профессиональный статус</h6>
+        <h2 class="wow fadeInUpSmall" data-wow-delay=".1s">Аккредитации и членство в СРО</h2>
+        <p class="wow fadeInUpSmall" data-wow-delay=".2s">
+          Профессиональный статус БЭСТ подтверждается аккредитацией в сфере судебной экспертизы
+          и членством в СРО в области инженерных изысканий.
+        </p>
+      </div>
+    </div>
+
+    <?php
+    $APPLICATION->IncludeComponent(
+        'best:document.list',
+        'compact',
+        [
+            'IBLOCK_CODE' => 'best_documents',
+            'DOC_TYPES' => ['fese', 'sro'],
+            'CACHE_TYPE' => 'A',
+            'CACHE_TIME' => 3600,
+        ]
+    );
+    ?>
+
+    <div class="text-center mt-4">
+      <a class="button button-default-outline" href="/accreditation/">Документы и профессиональный статус</a>
+    </div>
+  </div>
+</section>
+
 <!-- TRUST -->
 
 <section class="section parallax-container section-md bg-gray-700 section-overlay-3 text-center"

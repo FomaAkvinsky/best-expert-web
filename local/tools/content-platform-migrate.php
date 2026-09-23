@@ -182,7 +182,7 @@ function findIblock(string $code): ?array
 {
     $res = CIBlock::GetList(
         ['ID' => 'ASC'],
-        ['=CODE' => $code, 'CHECK_PERMISSIONS' => 'N']
+        ['CODE' => $code, 'CHECK_PERMISSIONS' => 'N']
     );
 
     $row = $res->Fetch();
@@ -231,7 +231,7 @@ function findProperty(int $iblockId, string $code): ?array
 {
     $res = CIBlockProperty::GetList(
         ['ID' => 'ASC'],
-        ['IBLOCK_ID' => $iblockId, '=CODE' => $code]
+        ['IBLOCK_ID' => $iblockId, 'CODE' => $code]
     );
 
     $row = $res->Fetch();
@@ -287,7 +287,7 @@ function ensureSection(int $iblockId, string $name, string $code, int $sort, boo
 {
     $res = CIBlockSection::GetList(
         ['ID' => 'ASC'],
-        ['IBLOCK_ID' => $iblockId, '=CODE' => $code],
+        ['IBLOCK_ID' => $iblockId, 'CODE' => $code],
         false,
         ['ID']
     );

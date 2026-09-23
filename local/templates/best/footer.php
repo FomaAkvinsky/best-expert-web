@@ -13,6 +13,18 @@ $asset->addJs(SITE_TEMPLATE_PATH . '/assets/js/script.js');
   <footer class="section footer-classic context-dark">
     <div class="container">
       <div class="footer-classic__main">
+
+        <div class="row mb-4">
+          <div class="col-12">
+            <p class="rights">
+              <a href="/accreditation/">
+                ООО «БЭСТ» — аккредитованная при Союзе ФЭСЭ судебно-экспертная организация.
+                Член СРО в области инженерных изысканий; сведения включены в Единый реестр НОПРИЗ.
+              </a>
+            </p>
+          </div>
+        </div>
+
         <div class="row row-50">
           <div class="col-lg-6">
             <div class="unit unit-spacing-sm flex-column flex-sm-row align-items-sm-center">

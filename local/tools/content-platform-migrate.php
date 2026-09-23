@@ -1,13 +1,15 @@
 <?php
 
-if (PHP_SAPI !== 'cli') {
-    http_response_code(403);
-    exit('CLI only.');
-}
+$isCli = (PHP_SAPI === 'cli');
 
 $root = realpath(__DIR__ . '/../..');
 if (!$root) {
-    fwrite(STDERR, "Cannot resolve document root.\n");
+    if ($isCli) {
+        fwrite(STDERR, "Cannot resolve document root.\n");
+    } else {
+        http_response_code(500);
+        echo 'Cannot resolve document root.';
+    }
     exit(1);
 }
 
@@ -21,22 +23,16 @@ require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.
 
 use Bitrix\Main\Loader;
 
-if (!Loader::includeModule('iblock')) {
-    fwrite(STDERR, "Bitrix module 'iblock' is not available.\n");
-    exit(1);
-}
+if (!$isCli) {
+    global $USER;
 
-$apply = in_array('--apply', $argv, true);
-
-function out(string $message): void
-{
-    fwrite(STDOUT, $message . PHP_EOL);
-}
-
-function fail(string $message): void
-{
-    fwrite(STDERR, 'ERROR: ' . $message . PHP_EOL);
-    exit(1);
+    if (!is_object($USER) || !$USER->IsAuthorized() || !$USER->IsAdmin()) {
+        http_response_code(403);
+        echo '<!doctype html><html lang="ru"><head><meta charset="utf-8"><title>БЭСТ — миграция</title></head><body>';
+        echo '<h1>Доступ запрещён</h1><p>Откройте страницу после авторизации администратором Bitrix.</p>';
+        echo '</body></html>';
+        exit;
+    }
 }
 
 function defaultSiteId(): string
@@ -276,7 +272,15 @@ foreach ($definitions as $key => $definition) {
 
 if (!$apply) {
     out('');
-    out('Dry run finished. Re-run with --apply to create missing objects.');
+    out($isCli
+        ? 'Dry run finished. Re-run with --apply to create missing objects.'
+        : 'Dry run finished. If the list is correct, click "Apply migration".'
+    );
+
+    if (!$isCli) {
+        echo '</pre></body></html>';
+    }
+
     exit(0);
 }
 
@@ -360,3 +364,7 @@ foreach ($documentProperties as $property) {
 
 out('');
 out('Migration completed successfully.');
+
+if (!$isCli) {
+    echo '</pre></body></html>';
+}

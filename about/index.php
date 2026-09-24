@@ -147,6 +147,35 @@ $APPLICATION->SetPageProperty('og_description','БЭСТ — экспертна�
   </div>
 </section>
 
+<!-- PROFESSIONAL STATUS -->
+<section class="section section-lg bg-gray-100">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8 text-center">
+        <h6 class="wow fadeInUpSmall">статус организации</h6>
+        <h2 class="wow fadeInUpSmall" data-wow-delay=".1s">Профессиональные аккредитации и членство в СРО</h2>
+      </div>
+    </div>
+
+    <?php
+    $APPLICATION->IncludeComponent(
+        'best:document.list',
+        'detailed',
+        [
+            'IBLOCK_CODE' => 'best_documents',
+            'DOC_TYPES' => ['fese', 'sro'],
+            'CACHE_TYPE' => 'A',
+            'CACHE_TIME' => 3600,
+        ]
+    );
+    ?>
+
+    <div class="text-center mt-4">
+      <a class="button button-primary" href="/accreditation/">Все документы и реквизиты</a>
+    </div>
+  </div>
+</section>
+
 <!-- CTA -->
       <section class="section bg-gray-700 particles-js-outer">
         <div id="particles-js"></div>

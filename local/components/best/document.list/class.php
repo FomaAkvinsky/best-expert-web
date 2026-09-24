@@ -12,7 +12,10 @@ class BestDocumentListComponent extends CBitrixComponent
     public function onPrepareComponentParams($params)
     {
         $params['IBLOCK_CODE'] = trim((string)($params['IBLOCK_CODE'] ?? 'best_documents'));
-        $params['DOC_TYPES'] = array_values(array_filter((array)($params['DOC_TYPES'] ?? [])));
+        $params['DOC_TYPES'] = array_values(array_filter(array_map(
+            static fn($value) => trim((string)$value),
+            (array)($params['DOC_TYPES'] ?? [])
+        )));
         $params['CACHE_TIME'] = (int)($params['CACHE_TIME'] ?? 3600);
 
         return $params;
@@ -45,7 +48,16 @@ class BestDocumentListComponent extends CBitrixComponent
         ];
 
         if ($this->arParams['DOC_TYPES']) {
-            $filter['PROPERTY_DOC_TYPE'] = $this->arParams['DOC_TYPES'];
+            $enumIds = $this->resolveDocumentTypeIds($iblockId, $this->arParams['DOC_TYPES']);
+
+            if (!$enumIds) {
+                return [
+                    'IBLOCK_ID' => $iblockId,
+                    'ITEMS' => [],
+                ];
+            }
+
+            $filter['PROPERTY_DOC_TYPE'] = $enumIds;
         }
 
         $items = [];
@@ -54,7 +66,7 @@ class BestDocumentListComponent extends CBitrixComponent
             $filter,
             false,
             false,
-            ['ID', 'IBLOCK_ID', 'NAME', 'CODE', 'PREVIEW_TEXT']
+            ['ID', 'IBLOCK_ID', 'NAME', 'CODE', 'SORT', 'PREVIEW_PICTURE', 'PREVIEW_TEXT', 'PREVIEW_TEXT_TYPE', 'DETAIL_TEXT', 'DETAIL_TEXT_TYPE']
         );
 
         while ($element = $res->GetNextElement()) {
@@ -67,5 +79,37 @@ class BestDocumentListComponent extends CBitrixComponent
             'IBLOCK_ID' => $iblockId,
             'ITEMS' => $items,
         ];
+    }
+
+    private function resolveDocumentTypeIds(int $iblockId, array $xmlIds): array
+    {
+        $property = CIBlockProperty::GetList(
+            ['ID' => 'ASC'],
+            [
+                'IBLOCK_ID' => $iblockId,
+                'CODE' => 'DOC_TYPE',
+            ]
+        )->Fetch();
+
+        if (!$property) {
+            return [];
+        }
+
+        $ids = [];
+        foreach ($xmlIds as $xmlId) {
+            $res = CIBlockPropertyEnum::GetList(
+                ['SORT' => 'ASC'],
+                [
+                    'PROPERTY_ID' => (int)$property['ID'],
+                    'XML_ID' => $xmlId,
+                ]
+            );
+
+            if ($row = $res->Fetch()) {
+                $ids[] = (int)$row['ID'];
+            }
+        }
+
+        return array_values(array_unique($ids));
     }
 }

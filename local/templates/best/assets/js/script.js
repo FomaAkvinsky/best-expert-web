@@ -67,7 +67,14 @@
 				animIn: 'fadeIn',
 				animOut: 'fadeOut',
 				conditions: function (event, link) {
-					return !/(\#|callto:|tel:|mailto:|:\/\/)/.test(link) && !event.currentTarget.hasAttribute('data-lightgallery');
+					var currentTarget = event.currentTarget;
+					var opensInNewTab = currentTarget && currentTarget.getAttribute('target') === '_blank';
+					var skipTransition = currentTarget && currentTarget.hasAttribute('data-no-page-transition');
+
+					return !opensInNewTab
+						&& !skipTransition
+						&& !/(\#|callto:|tel:|mailto:|:\/\/)/.test(link)
+						&& !currentTarget.hasAttribute('data-lightgallery');
 				},
 				onAnimationStart: function (options) {
 					setTimeout(function () {

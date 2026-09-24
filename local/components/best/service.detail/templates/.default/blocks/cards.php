@@ -42,7 +42,7 @@ if ($sectionOverride !== '') {
 
 if ($view === 'link-boxes-main'):
 ?>
-<section class="<?=htmlspecialcharsbx($mainSectionClass)?>">
+<?php bestServiceBlockSectionStart($block, $mainSectionClass); ?>
     <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="<?=htmlspecialcharsbx($headingRowClass)?>">
             <div class="<?=htmlspecialcharsbx($headingColClass)?>">
@@ -81,7 +81,7 @@ if ($view === 'link-boxes-main'):
 
 <?php elseif ($view === 'link-boxes-compact'): ?>
 
-<section class="<?=htmlspecialcharsbx($compactSectionClass)?>">
+<?php bestServiceBlockSectionStart($block, $compactSectionClass); ?>
     <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="<?=htmlspecialcharsbx($contentRowClass !== '' ? $contentRowClass : 'row mb-5')?>">
             <div class="<?=htmlspecialcharsbx($contentColClass !== '' ? $contentColClass : $compactColumnClass)?>">
@@ -116,7 +116,7 @@ if ($view === 'link-boxes-main'):
 
 <?php else: ?>
 
-<section class="<?=htmlspecialcharsbx($sectionOverride !== '' ? $sectionOverride : 'section section-lg bg-white')?>">
+<?php bestServiceBlockSectionStart($block, $sectionOverride !== '' ? $sectionOverride : 'section section-lg bg-white'); ?>
     <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="<?=htmlspecialcharsbx($headingRowClass)?>">
             <div class="<?=htmlspecialcharsbx($headingColClass)?>">

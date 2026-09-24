@@ -3,12 +3,17 @@ $props = $block['PROPERTIES'];
 $questions = (array)($props['ITEMS']['VALUE'] ?? []);
 $answers = (array)($props['ITEMS']['DESCRIPTION'] ?? []);
 $accordionId = 'accordion-best-' . (int)$block['ID'];
+
+$sectionClass = bestServiceBlockClass($block, 'SECTION_CLASS', 'section section-lg bg-gray-100');
+$containerClass = bestServiceBlockClass($block, 'CONTAINER_CLASS', 'container');
+$contentRowClass = bestServiceBlockClass($block, 'CONTENT_ROW_CLASS', 'row row-40 justify-content-center');
+$titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', '');
 ?>
-<section class="section section-lg bg-gray-100">
-    <div class="container">
-        <div class="row row-40 justify-content-center">
+<section class="<?=htmlspecialcharsbx($sectionClass)?>">
+    <div class="<?=htmlspecialcharsbx($containerClass)?>">
+        <div class="<?=htmlspecialcharsbx($contentRowClass)?>">
             <div class="col-md-10 col-lg-6 wow fadeInUpSmall">
-                <h3><?=htmlspecialcharsbx($block['NAME'])?></h3>
+                <h3<?php if ($titleClass !== ''): ?> class="<?=htmlspecialcharsbx($titleClass)?>"<?php endif; ?>><?=htmlspecialcharsbx($block['NAME'])?></h3>
                 <div class="divider-modern"></div>
                 <?php if (!empty($props['INTRO']['VALUE'])): ?>
                     <p><?=nl2br(htmlspecialcharsbx((string)$props['INTRO']['VALUE']))?></p>

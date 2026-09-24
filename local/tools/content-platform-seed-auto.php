@@ -451,6 +451,13 @@ foreach ($blocks as $block) {
 
     if (!empty($block['items'])) {
         $properties['ITEMS'] = describedItems($block['items']);
+
+        if (($block['type'] ?? '') === 'faq') {
+            $properties['FAQ_ANSWERS'] = array_map(
+                static fn($item) => (string)($item[1] ?? ''),
+                $block['items']
+            );
+        }
     }
 
     if (!empty($block['layout'])) {

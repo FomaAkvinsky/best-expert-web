@@ -523,6 +523,7 @@ $blockProperties = [
     ['NAME' => 'Надзаголовок', 'CODE' => 'EYEBROW', 'PROPERTY_TYPE' => 'S', 'SORT' => 120],
     ['NAME' => 'Вводный текст', 'CODE' => 'INTRO', 'PROPERTY_TYPE' => 'S', 'SORT' => 130, 'ROW_COUNT' => 5],
     ['NAME' => 'Элементы блока', 'CODE' => 'ITEMS', 'PROPERTY_TYPE' => 'S', 'MULTIPLE' => 'Y', 'WITH_DESCRIPTION' => 'Y', 'SORT' => 140, 'ROW_COUNT' => 3],
+    ['NAME' => 'Ответы FAQ', 'CODE' => 'FAQ_ANSWERS', 'PROPERTY_TYPE' => 'S', 'MULTIPLE' => 'Y', 'SORT' => 145, 'ROW_COUNT' => 8],
     ['NAME' => 'Количество колонок', 'CODE' => 'LAYOUT', 'PROPERTY_TYPE' => 'L', 'VALUES' => $layouts, 'SORT' => 150],
     ['NAME' => 'Вариант отображения', 'CODE' => 'VIEW', 'PROPERTY_TYPE' => 'L', 'VALUES' => $blockViews, 'SORT' => 155],
     ['NAME' => 'Подзаголовок блока', 'CODE' => 'SUBTITLE', 'PROPERTY_TYPE' => 'S', 'SORT' => 156],

@@ -1,7 +1,12 @@
 <?php
 $props = $block['PROPERTIES'];
 $questions = (array)($props['ITEMS']['VALUE'] ?? []);
-$answers = (array)($props['ITEMS']['DESCRIPTION'] ?? []);
+$answers = (array)($props['FAQ_ANSWERS']['VALUE'] ?? []);
+
+if (!$answers) {
+    $answers = (array)($props['ITEMS']['DESCRIPTION'] ?? []);
+}
+
 $accordionId = 'accordion-best-' . (int)$block['ID'];
 
 $sectionClass = bestServiceBlockClass($block, 'SECTION_CLASS', 'section section-lg bg-gray-100');

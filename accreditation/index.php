@@ -24,9 +24,9 @@ $APPLICATION->SetPageProperty('og_description','ФЭСЭ, СРО в област
                         <li class="active">Аккредитации и СРО</li>
                     </ul>
 
-                    <h1 class="wow fadeInUpSmall">Аккредитации, СРО и профессиональный статус ООО «БЭСТ»</h1>
+                    <h1 class="wow fadeInUpSmall">Аккредитации, СРО и профессиональный статус</h1>
                     <p class="lead wow fadeInUpSmall" data-wow-delay=".1s">
-                        Статус судебно-экспертной организации и профессиональные основания для выполнения отдельных видов исследований и инженерных изысканий.
+                        Здесь собраны документы и сведения, по которым можно проверить аккредитацию БЭСТ, членство в СРО и профессиональные сертификаты.
                     </p>
                 </div>
             </div>
@@ -39,12 +39,10 @@ $APPLICATION->SetPageProperty('og_description','ФЭСЭ, СРО в област
         <div class="profile-light">
             <div class="profile-light__main">
                 <div class="profile-light__inner" style="max-width:980px;">
-                    <h4 class="profile-light__title">Профессиональный статус подтверждается документами и реестрами</h4>
+                    <h4 class="profile-light__title">Все ключевые документы — в одном месте</h4>
                     <div class="profile-light__text">
                         <p>
-                            Для судебной экспертизы и инженерных изысканий используются разные профессиональные основания.
-                            Мы указываем их отдельно, чтобы не смешивать статус негосударственной судебно-экспертной организации
-                            и членство в СРО.
+                            Аккредитации, сведения из профессиональных реестров и сертификаты собраны здесь вместе с реквизитами и подтверждающими документами.
                         </p>
                     </div>
                 </div>
@@ -59,10 +57,6 @@ $APPLICATION->SetPageProperty('og_description','ФЭСЭ, СРО в област
             <div class="col-md-10 col-lg-8 text-center">
                 <h6 class="wow fadeInUpSmall">судебная экспертиза</h6>
                 <h2 class="wow fadeInUpSmall" data-wow-delay=".1s">Аккредитация при Союзе ФЭСЭ</h2>
-                <p class="wow fadeInUpSmall" data-wow-delay=".2s">
-                    ООО «БЮРО ЭКСПЕРТНЫХ СИСТЕМ И ТЕХНОЛОГИЙ» аккредитовано при Союзе финансово-экономических судебных экспертов
-                    в качестве негосударственной судебно-экспертной организации.
-                </p>
             </div>
         </div>
 
@@ -87,10 +81,6 @@ $APPLICATION->SetPageProperty('og_description','ФЭСЭ, СРО в област
             <div class="col-md-10 col-lg-8 text-center">
                 <h6 class="wow fadeInUpSmall">инженерные изыскания</h6>
                 <h2 class="wow fadeInUpSmall" data-wow-delay=".1s">Членство в СРО и сведения НОПРИЗ</h2>
-                <p class="wow fadeInUpSmall" data-wow-delay=".2s">
-                    ООО «БЭСТ» является членом Ассоциации «Национальное объединение изыскателей „Альянс Развитие“».
-                    Сведения об организации включены в Единый реестр НОПРИЗ.
-                </p>
             </div>
         </div>
 
@@ -115,10 +105,6 @@ $APPLICATION->SetPageProperty('og_description','ФЭСЭ, СРО в област
             <div class="col-md-10 col-lg-8 text-center">
                 <h6 class="wow fadeInUpSmall">технологическая база</h6>
                 <h2 class="wow fadeInUpSmall" data-wow-delay=".1s">Профессиональные программные комплексы</h2>
-                <p class="wow fadeInUpSmall" data-wow-delay=".2s">
-                    Отдельные сертификаты подтверждают право использования профессионального программного обеспечения и баз данных,
-                    применяемых в экспертной работе.
-                </p>
             </div>
         </div>
 
@@ -151,10 +137,50 @@ $APPLICATION->SetPageProperty('og_description','ФЭСЭ, СРО в област
                 </div>
             </div>
             <div class="col-lg-3 pb-4">
-                <a class="button button-primary" href="/contacts/">Связаться с БЭСТ</a>
+                <a class="button button-primary" href="#b24-form">Связаться с БЭСТ</a>
             </div>
         </div>
     </div>
+</section>
+
+<!-- CONTACTS / FORM ANCHOR -->
+<section class="section section-lg" id="b24-form">
+  <div class="container">
+    <div class="row justify-content-center justify-content-lg-between row-2-columns-bordered row-50">
+      <div class="col-md-10 col-lg-4">
+        <h3>Свяжитесь с нами</h3>
+        <ul class="list-creative">
+          <li>
+            <dl class="list-terms-medium">
+              <dt>Телефон</dt>
+              <dd>
+                <ul class="list-xs">
+                  <li><a href="tel:+79035220546">+7 903 522-0546</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </li>
+          <li>
+            <dl class="list-terms-medium">
+              <dt>E-mail</dt>
+              <dd>
+                <ul class="list-xs">
+                  <li><a href="mailto:ask@best-expert.pro">ask@best-expert.pro</a></li>
+                </ul>
+              </dd>
+            </dl>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-10 col-lg-7">
+        <h3>Форма обратной связи</h3>
+        <div class="application-form">
+          <?include($_SERVER["DOCUMENT_ROOT"].'/include/main-form.php');?>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <?php

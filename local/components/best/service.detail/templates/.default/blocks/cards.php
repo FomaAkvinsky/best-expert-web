@@ -12,10 +12,24 @@ $intro = trim((string)($props['INTRO']['VALUE'] ?? ''));
 $subtitle = trim((string)($props['SUBTITLE']['VALUE'] ?? ''));
 $subintro = trim((string)($props['SUBINTRO']['VALUE'] ?? ''));
 $view = (string)($block['VIEW'] ?? 'cards');
+$blockCode = (string)($block['CODE'] ?? '');
+
+$mainSectionClass = 'section section-lg bg-white';
+$compactSectionClass = 'section pt-4 bg-white';
+$compactColumnClass = 'col-xl-9 mt-5 wow fadeInUpSmall';
+
+if ($blockCode === 'construction-tasks') {
+    $mainSectionClass = 'section section-lg pb-0 bg-white';
+}
+
+if ($blockCode === 'construction-methods') {
+    $compactSectionClass = 'section pt-0 bg-white';
+    $compactColumnClass = 'col-xl-9 wow fadeInUpSmall';
+}
 
 if ($view === 'link-boxes-main'):
 ?>
-<section class="section section-lg bg-white">
+<section class="<?=htmlspecialcharsbx($mainSectionClass)?>">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-10 col-lg-8 text-center">
@@ -54,10 +68,10 @@ if ($view === 'link-boxes-main'):
 
 <?php elseif ($view === 'link-boxes-compact'): ?>
 
-<section class="section pt-4 bg-white">
+<section class="<?=htmlspecialcharsbx($compactSectionClass)?>">
     <div class="container">
         <div class="row mb-5">
-            <div class="col-xl-9 mt-5 wow fadeInUpSmall">
+            <div class="<?=htmlspecialcharsbx($compactColumnClass)?>">
                 <h3 class="h4"><?=htmlspecialcharsbx($block['NAME'])?></h3>
                 <?php if ($intro !== ''): ?><p><?=nl2br(htmlspecialcharsbx($intro))?></p><?php endif; ?>
 

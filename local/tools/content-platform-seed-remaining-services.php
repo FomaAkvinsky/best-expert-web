@@ -445,6 +445,7 @@ $services = [
             [
                 'code' => 'engineering-questions-condition',
                 'sort' => 700,
+                'section_class' => 'section pt-4 pb-4 bg-white',
                 'name' => 'Техническое состояние и работоспособность',
                 'type' => 'questions',
                 'eyebrow' => 'практика',

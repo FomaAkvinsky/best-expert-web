@@ -77,7 +77,8 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                                     <a class="button button-sm button-primary"
                                        href="<?=htmlspecialcharsbx($fileUrl)?>"
                                        target="_blank"
-                                       rel="noopener noreferrer">Открыть документ</a>
+                                       rel="noopener noreferrer"
+                                       onclick="window.open(this.href, '_blank'); return false;">Открыть документ</a>
                                 <?php endif; ?>
 
                                 <?php if ($externalUrl): ?>
@@ -96,6 +97,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                                 <a href="<?=htmlspecialcharsbx($fileUrl)?>"
                                    target="_blank"
                                    rel="noopener noreferrer"
+                                   onclick="window.open(this.href, '_blank'); return false;"
                                    aria-label="Открыть документ «<?=htmlspecialcharsbx($item['NAME'])?>»">
                             <?php endif; ?>
 

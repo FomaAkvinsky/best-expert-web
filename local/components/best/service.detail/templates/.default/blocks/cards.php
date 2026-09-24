@@ -82,7 +82,7 @@ if ($view === 'link-boxes-main'):
 <?php elseif ($view === 'link-boxes-compact'): ?>
 
 <section class="<?=htmlspecialcharsbx($compactSectionClass)?>">
-    <div class="container">
+    <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="<?=htmlspecialcharsbx($contentRowClass !== '' ? $contentRowClass : 'row mb-5')?>">
             <div class="<?=htmlspecialcharsbx($contentColClass !== '' ? $contentColClass : $compactColumnClass)?>">
                 <h3 class="<?=htmlspecialcharsbx(bestServiceBlockClass($block, 'TITLE_CLASS', 'h4'))?>"><?=htmlspecialcharsbx($block['NAME'])?></h3>
@@ -116,12 +116,12 @@ if ($view === 'link-boxes-main'):
 
 <?php else: ?>
 
-<section class="section section-lg bg-white">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-8 text-center">
+<section class="<?=htmlspecialcharsbx($sectionOverride !== '' ? $sectionOverride : 'section section-lg bg-white')?>">
+    <div class="<?=htmlspecialcharsbx($containerClass)?>">
+        <div class="<?=htmlspecialcharsbx($headingRowClass)?>">
+            <div class="<?=htmlspecialcharsbx($headingColClass)?>">
                 <?php if ($eyebrow !== ''): ?><h6 class="wow fadeInUpSmall"><?=htmlspecialcharsbx($eyebrow)?></h6><?php endif; ?>
-                <h2 class="wow fadeInUpSmall" data-wow-delay=".1s"><?=htmlspecialcharsbx($block['NAME'])?></h2>
+                <h2 class="<?=htmlspecialcharsbx($titleClass)?>" data-wow-delay=".1s"><?=htmlspecialcharsbx($block['NAME'])?></h2>
                 <?php if ($intro !== ''): ?><p class="wow fadeInUpSmall" data-wow-delay=".2s"><?=nl2br(htmlspecialcharsbx($intro))?></p><?php endif; ?>
             </div>
         </div>

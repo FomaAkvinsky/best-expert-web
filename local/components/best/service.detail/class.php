@@ -15,6 +15,8 @@ class BestServiceDetailComponent extends CBitrixComponent
         $params['BLOCKS_IBLOCK_CODE'] = trim((string)($params['BLOCKS_IBLOCK_CODE'] ?? 'best_service_blocks'));
         $params['SECTION_CODE'] = trim((string)($params['SECTION_CODE'] ?? ''));
         $params['CODE'] = trim((string)($params['CODE'] ?? ''));
+        $params['XML_ID'] = trim((string)($params['XML_ID'] ?? ''));
+        $params['PREVIEW_MODE'] = (($params['PREVIEW_MODE'] ?? 'N') === 'Y') ? 'Y' : 'N';
         $params['CACHE_TIME'] = (int)($params['CACHE_TIME'] ?? 3600);
 
         return $params;
@@ -27,7 +29,10 @@ class BestServiceDetailComponent extends CBitrixComponent
             return;
         }
 
-        if ($this->arParams['SECTION_CODE'] === '' || $this->arParams['CODE'] === '') {
+        if (
+            $this->arParams['SECTION_CODE'] === ''
+            || ($this->arParams['CODE'] === '' && $this->arParams['XML_ID'] === '')
+        ) {
             $this->set404();
             return;
         }
@@ -82,7 +87,8 @@ class BestServiceDetailComponent extends CBitrixComponent
                 'IBLOCK_ID' => $serviceIblockId,
                 'SECTION_ID' => (int)$section['ID'],
                 'INCLUDE_SUBSECTIONS' => 'N',
-                'CODE' => $this->arParams['CODE'],
+                ($this->arParams['CODE'] !== '' ? 'CODE' : 'XML_ID')
+                    => ($this->arParams['CODE'] !== '' ? $this->arParams['CODE'] : $this->arParams['XML_ID']),
                 'ACTIVE' => 'Y',
                 'ACTIVE_DATE' => 'Y',
             ],
@@ -190,18 +196,24 @@ class BestServiceDetailComponent extends CBitrixComponent
         $APPLICATION->SetTitle((string)$service['NAME']);
         $APPLICATION->SetPageProperty('title', $title);
 
+        if ($this->arParams['PREVIEW_MODE'] === 'Y') {
+            $APPLICATION->SetPageProperty('robots', 'noindex, nofollow');
+        }
+
         if ($description !== '') {
             $APPLICATION->SetPageProperty('description', $description);
         }
 
         $APPLICATION->SetPageProperty('og_title', $ogTitle);
         $APPLICATION->SetPageProperty('og_description', $ogDescription);
-        $APPLICATION->SetPageProperty(
-            'canonical',
-            'https://' . $_SERVER['HTTP_HOST']
-            . '/services/' . rawurlencode((string)$section['CODE'])
-            . '/' . rawurlencode((string)$service['CODE']) . '/'
-        );
+        if ($this->arParams['PREVIEW_MODE'] !== 'Y' && trim((string)$service['CODE']) !== '') {
+            $APPLICATION->SetPageProperty(
+                'canonical',
+                'https://' . $_SERVER['HTTP_HOST']
+                . '/services/' . rawurlencode((string)$section['CODE'])
+                . '/' . rawurlencode((string)$service['CODE']) . '/'
+            );
+        }
     }
 
     private function set404(): void

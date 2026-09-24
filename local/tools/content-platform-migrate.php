@@ -532,6 +532,13 @@ $blockProperties = [
     ['NAME' => 'Якорь', 'CODE' => 'ANCHOR', 'PROPERTY_TYPE' => 'S', 'SORT' => 170],
     ['NAME' => 'Текст кнопки', 'CODE' => 'CTA_LABEL', 'PROPERTY_TYPE' => 'S', 'SORT' => 180],
     ['NAME' => 'Ссылка кнопки', 'CODE' => 'CTA_URL', 'PROPERTY_TYPE' => 'S', 'SORT' => 190],
+    ['NAME' => 'CSS-класс секции', 'CODE' => 'SECTION_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 200],
+    ['NAME' => 'CSS-класс container', 'CODE' => 'CONTAINER_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 210],
+    ['NAME' => 'CSS-класс строки заголовка', 'CODE' => 'HEADING_ROW_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 220],
+    ['NAME' => 'CSS-класс колонки заголовка', 'CODE' => 'HEADING_COL_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 230],
+    ['NAME' => 'CSS-класс заголовка', 'CODE' => 'TITLE_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 240],
+    ['NAME' => 'CSS-класс строки контента', 'CODE' => 'CONTENT_ROW_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 250],
+    ['NAME' => 'CSS-класс основной колонки', 'CODE' => 'CONTENT_COL_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 260],
 ];
 
 if ($blocksId) {

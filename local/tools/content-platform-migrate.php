@@ -451,6 +451,29 @@ $layouts = [
     ['VALUE' => '4 колонки', 'DEF' => 'N', 'SORT' => 400, 'XML_ID' => '4'],
 ];
 
+$backgroundSides = [
+    ['VALUE' => 'Справа', 'DEF' => 'Y', 'SORT' => 100, 'XML_ID' => 'right'],
+    ['VALUE' => 'Слева', 'DEF' => 'N', 'SORT' => 200, 'XML_ID' => 'left'],
+];
+
+$backgroundVertical = [
+    ['VALUE' => 'По центру', 'DEF' => 'Y', 'SORT' => 100, 'XML_ID' => 'center'],
+    ['VALUE' => 'Сверху', 'DEF' => 'N', 'SORT' => 200, 'XML_ID' => 'top'],
+    ['VALUE' => 'Снизу', 'DEF' => 'N', 'SORT' => 300, 'XML_ID' => 'bottom'],
+];
+
+$backgroundFade = [
+    ['VALUE' => 'Без градиента', 'DEF' => 'N', 'SORT' => 100, 'XML_ID' => 'none'],
+    ['VALUE' => 'Мягкий', 'DEF' => 'Y', 'SORT' => 200, 'XML_ID' => 'soft'],
+    ['VALUE' => 'Средний', 'DEF' => 'N', 'SORT' => 300, 'XML_ID' => 'medium'],
+    ['VALUE' => 'Сильный', 'DEF' => 'N', 'SORT' => 400, 'XML_ID' => 'strong'],
+];
+
+$backgroundMobile = [
+    ['VALUE' => 'Скрывать на мобильных', 'DEF' => 'Y', 'SORT' => 100, 'XML_ID' => 'hide'],
+    ['VALUE' => 'Показывать на мобильных', 'DEF' => 'N', 'SORT' => 200, 'XML_ID' => 'show'],
+];
+
 $documentTypes = [
     ['VALUE' => 'ФЭСЭ', 'DEF' => 'N', 'SORT' => 100, 'XML_ID' => 'fese'],
     ['VALUE' => 'СРО / НОПРИЗ', 'DEF' => 'N', 'SORT' => 200, 'XML_ID' => 'sro'],
@@ -540,6 +563,13 @@ $blockProperties = [
     ['NAME' => 'CSS-класс заголовка', 'CODE' => 'TITLE_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 240],
     ['NAME' => 'CSS-класс строки контента', 'CODE' => 'CONTENT_ROW_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 250],
     ['NAME' => 'CSS-класс основной колонки', 'CODE' => 'CONTENT_COL_CLASS', 'PROPERTY_TYPE' => 'S', 'SORT' => 260],
+    ['NAME' => 'Фоновая подложка (PNG/WebP)', 'CODE' => 'BACKGROUND_IMAGE', 'PROPERTY_TYPE' => 'F', 'FILE_TYPE' => 'png,webp', 'SORT' => 300],
+    ['NAME' => 'Подложка: сторона', 'CODE' => 'BACKGROUND_SIDE', 'PROPERTY_TYPE' => 'L', 'VALUES' => $backgroundSides, 'SORT' => 310],
+    ['NAME' => 'Подложка: вертикальное положение', 'CODE' => 'BACKGROUND_VERTICAL', 'PROPERTY_TYPE' => 'L', 'VALUES' => $backgroundVertical, 'SORT' => 320],
+    ['NAME' => 'Подложка: ширина (например 42%)', 'CODE' => 'BACKGROUND_WIDTH', 'PROPERTY_TYPE' => 'S', 'SORT' => 330],
+    ['NAME' => 'Подложка: прозрачность (0–1)', 'CODE' => 'BACKGROUND_OPACITY', 'PROPERTY_TYPE' => 'S', 'SORT' => 340],
+    ['NAME' => 'Подложка: градиент к тексту', 'CODE' => 'BACKGROUND_FADE', 'PROPERTY_TYPE' => 'L', 'VALUES' => $backgroundFade, 'SORT' => 350],
+    ['NAME' => 'Подложка: мобильные', 'CODE' => 'BACKGROUND_MOBILE', 'PROPERTY_TYPE' => 'L', 'VALUES' => $backgroundMobile, 'SORT' => 360],
 ];
 
 if ($blocksId) {

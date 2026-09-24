@@ -302,7 +302,7 @@ if (!$service) {
 }
 
 $serviceId = (int)$service['ID'];
-out(sprintf('[sync] service-construction (#%d) -> stroitelno-tehnicheskaya-ekspertiza', $serviceId));
+out(sprintf('[sync] service-construction (#%d) [DEV preview, public CODE remains empty]', $serviceId));
 
 if ($apply) {
     $element = new CIBlockElement();
@@ -311,7 +311,7 @@ if ($apply) {
         'ACTIVE' => 'Y',
         'SORT' => 200,
         'NAME' => 'Строительно-техническая экспертиза',
-        'CODE' => 'stroitelno-tehnicheskaya-ekspertiza',
+        'CODE' => '',
         'XML_ID' => 'service-construction',
         'PREVIEW_TEXT' => 'Качество и объем работ, дефекты, причины повреждений, техническое состояние объекта, проектная и исполнительная документация.',
         'PREVIEW_TEXT_TYPE' => 'text',
@@ -515,7 +515,7 @@ foreach ($blocks as $block) {
 
 out('');
 out($apply
-    ? 'Construction service seed completed successfully. Public URL: /services/sudebnye-ekspertizy/stroitelno-tehnicheskaya-ekspertiza/'
+    ? 'Construction service seed completed successfully. Preview: /local/tools/service-preview.php?section=sudebnye-ekspertizy&xml_id=service-construction'
     : 'Dry run finished. If the list is correct, click "Apply seed".'
 );
 

@@ -125,6 +125,10 @@ class BestServiceDetailComponent extends CBitrixComponent
             $block['TYPE'] = $this->listXmlId($block['PROPERTIES']['BLOCK_TYPE'] ?? []);
             $block['LAYOUT'] = $this->listXmlId($block['PROPERTIES']['LAYOUT'] ?? []);
             $block['VIEW'] = $this->listXmlId($block['PROPERTIES']['VIEW'] ?? []);
+            $block['BACKGROUND_SIDE'] = $this->listXmlId($block['PROPERTIES']['BACKGROUND_SIDE'] ?? []);
+            $block['BACKGROUND_VERTICAL'] = $this->listXmlId($block['PROPERTIES']['BACKGROUND_VERTICAL'] ?? []);
+            $block['BACKGROUND_FADE'] = $this->listXmlId($block['PROPERTIES']['BACKGROUND_FADE'] ?? []);
+            $block['BACKGROUND_MOBILE'] = $this->listXmlId($block['PROPERTIES']['BACKGROUND_MOBILE'] ?? []);
             $block['DOCUMENT_ITEMS'] = $this->loadDocuments($block['PROPERTIES']['DOCUMENTS']['VALUE'] ?? []);
             $blocks[] = $block;
         }

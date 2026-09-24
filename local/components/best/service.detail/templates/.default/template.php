@@ -16,6 +16,85 @@ if (!function_exists('bestServiceBlockClass')) {
         return $value !== '' ? $value : $default;
     }
 }
+
+if (!function_exists('bestServiceBlockBackground')) {
+    function bestServiceBlockBackground(array $block): array
+    {
+        $props = $block['PROPERTIES'] ?? [];
+        $fileId = (int)($props['BACKGROUND_IMAGE']['VALUE'] ?? 0);
+
+        if ($fileId <= 0) {
+            return [
+                'enabled' => false,
+                'class' => '',
+                'style' => '',
+                'image' => '',
+            ];
+        }
+
+        $image = (string)CFile::GetPath($fileId);
+        if ($image === '') {
+            return [
+                'enabled' => false,
+                'class' => '',
+                'style' => '',
+                'image' => '',
+            ];
+        }
+
+        $side = in_array(($block['BACKGROUND_SIDE'] ?? ''), ['left', 'right'], true)
+            ? (string)$block['BACKGROUND_SIDE']
+            : 'right';
+
+        $vertical = in_array(($block['BACKGROUND_VERTICAL'] ?? ''), ['top', 'center', 'bottom'], true)
+            ? (string)$block['BACKGROUND_VERTICAL']
+            : 'center';
+
+        $fade = in_array(($block['BACKGROUND_FADE'] ?? ''), ['none', 'soft', 'medium', 'strong'], true)
+            ? (string)$block['BACKGROUND_FADE']
+            : 'soft';
+
+        $mobile = (($block['BACKGROUND_MOBILE'] ?? '') === 'show') ? 'show' : 'hide';
+
+        $width = trim((string)($props['BACKGROUND_WIDTH']['VALUE'] ?? ''));
+        if ($width === '' || !preg_match('/^(?:\\d+(?:\\.\\d+)?)(?:%|px|rem|vw)$/', $width)) {
+            $width = '44%';
+        }
+
+        $opacityRaw = str_replace(',', '.', trim((string)($props['BACKGROUND_OPACITY']['VALUE'] ?? '')));
+        $opacity = is_numeric($opacityRaw) ? (float)$opacityRaw : 1.0;
+        $opacity = max(0.0, min(1.0, $opacity));
+
+        return [
+            'enabled' => true,
+            'class' => implode(' ', [
+                'best-block-art',
+                'best-block-art--' . $side,
+                'best-block-art--' . $vertical,
+                'best-block-art--fade-' . $fade,
+                'best-block-art--mobile-' . $mobile,
+            ]),
+            'style' => '--best-block-art-width:' . $width . ';--best-block-art-opacity:' . rtrim(rtrim(number_format($opacity, 2, '.', ''), '0'), '.') . ';',
+            'image' => $image,
+        ];
+    }
+}
+
+if (!function_exists('bestServiceBlockSectionStart')) {
+    function bestServiceBlockSectionStart(array $block, string $sectionClass, string $extraAttributes = ''): void
+    {
+        $background = bestServiceBlockBackground($block);
+        $classes = trim($sectionClass . ($background['enabled'] ? ' best-block-art-section' : ''));
+
+        echo '<section class="' . htmlspecialcharsbx($classes) . '"' . $extraAttributes . '>';
+
+        if ($background['enabled']) {
+            echo '<div class="' . htmlspecialcharsbx($background['class']) . '" style="' . htmlspecialcharsbx($background['style']) . '" aria-hidden="true">';
+            echo '<img src="' . htmlspecialcharsbx($background['image']) . '" alt="" loading="lazy" decoding="async">';
+            echo '</div>';
+        }
+    }
+}
 ?>
 
 <section class="section parallax-container section-md bg-gray-700 section-overlay-3"

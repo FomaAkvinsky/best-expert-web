@@ -3,7 +3,7 @@ $props = $block['PROPERTIES'];
 $eyebrow = trim((string)($props['EYEBROW']['VALUE'] ?? ''));
 $intro = trim((string)($props['INTRO']['VALUE'] ?? ''));
 ?>
-<section class="section section-lg bg-gray-100">
+<section class="section section-lg bg-white">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-10 col-lg-8 text-center">

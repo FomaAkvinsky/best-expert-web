@@ -19,11 +19,11 @@ $compactSectionClass = 'section pt-4 bg-white';
 $compactColumnClass = 'col-xl-9 mt-5 wow fadeInUpSmall';
 
 if ($blockCode === 'construction-tasks') {
-    $mainSectionClass = 'section section-lg pb-0 bg-white';
+    $mainSectionClass = 'section section-lg pb-4 bg-white';
 }
 
 if ($blockCode === 'construction-methods') {
-    $compactSectionClass = 'section pt-0 bg-white';
+    $compactSectionClass = 'section pt-4 bg-white';
     $compactColumnClass = 'col-xl-9 wow fadeInUpSmall';
 }
 

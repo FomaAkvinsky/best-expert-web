@@ -75,10 +75,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                             <div class="mt-4">
                                 <?php if ($fileUrl): ?>
                                     <a class="button button-sm button-primary"
-                                       href="<?=htmlspecialcharsbx($fileUrl)?>"
-                                       target="_blank"
-                                       rel="noopener noreferrer"
-                                       onclick="window.open(this.href, '_blank'); return false;">Открыть документ</a>
+                                       href="javascript:void(0)"
+                                       data-document-url="<?=htmlspecialcharsbx($fileUrl)?>"
+                                       onclick="window.open(this.dataset.documentUrl, '_blank', 'noopener,noreferrer'); return false;">Открыть документ</a>
                                 <?php endif; ?>
 
                                 <?php if ($externalUrl): ?>
@@ -94,10 +93,9 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) {
                     <?php if ($previewPictureUrl): ?>
                         <div class="col-lg-5 text-center">
                             <?php if ($fileUrl): ?>
-                                <a href="<?=htmlspecialcharsbx($fileUrl)?>"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   onclick="window.open(this.href, '_blank'); return false;"
+                                <a href="javascript:void(0)"
+                                   data-document-url="<?=htmlspecialcharsbx($fileUrl)?>"
+                                   onclick="window.open(this.dataset.documentUrl, '_blank', 'noopener,noreferrer'); return false;"
                                    aria-label="Открыть документ «<?=htmlspecialcharsbx($item['NAME'])?>»">
                             <?php endif; ?>
 

@@ -9,7 +9,7 @@ $headingColClass = bestServiceBlockClass($block, 'HEADING_COL_CLASS', 'col-md-10
 $titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', 'wow fadeInUpSmall');
 $contentRowClass = bestServiceBlockClass($block, 'CONTENT_ROW_CLASS', 'row row-30');
 ?>
-<section class="<?=htmlspecialcharsbx($sectionClass)?>">
+<?php bestServiceBlockSectionStart($block, $sectionClass); ?>
   <div class="<?=htmlspecialcharsbx($containerClass)?>">
     <div class="<?=htmlspecialcharsbx($headingRowClass)?>">
       <div class="<?=htmlspecialcharsbx($headingColClass)?>">

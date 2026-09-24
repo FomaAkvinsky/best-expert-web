@@ -248,6 +248,13 @@ function syncBlock(
         'CTA_LABEL' => $definition['cta_label'] ?? '',
         'CTA_URL' => $definition['cta_url'] ?? '',
         'DOCUMENTS' => $definition['documents'] ?? [],
+        'SECTION_CLASS' => $definition['section_class'] ?? '',
+        'CONTAINER_CLASS' => $definition['container_class'] ?? '',
+        'HEADING_ROW_CLASS' => $definition['heading_row_class'] ?? '',
+        'HEADING_COL_CLASS' => $definition['heading_col_class'] ?? '',
+        'TITLE_CLASS' => $definition['title_class'] ?? '',
+        'CONTENT_ROW_CLASS' => $definition['content_row_class'] ?? '',
+        'CONTENT_COL_CLASS' => $definition['content_col_class'] ?? '',
     ];
 
     if (!empty($definition['layout'])) {

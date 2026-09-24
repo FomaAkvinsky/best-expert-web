@@ -153,11 +153,7 @@ $APPLICATION->SetPageProperty('og_description','БЭСТ — экспертна�
     <div class="row justify-content-center">
       <div class="col-md-10 col-lg-8 text-center">
         <h6 class="wow fadeInUpSmall">статус организации</h6>
-        <h2 class="wow fadeInUpSmall" data-wow-delay=".1s">Профессиональные аккредитации и СРО</h2>
-        <p class="wow fadeInUpSmall" data-wow-delay=".2s">
-          Для судебной экспертизы и инженерных изысканий применяются разные профессиональные основания.
-          Мы указываем их раздельно и публикуем проверяемые реквизиты.
-        </p>
+        <h2 class="wow fadeInUpSmall" data-wow-delay=".1s">Профессиональные аккредитации и членство в СРО</h2>
       </div>
     </div>
 

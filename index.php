@@ -402,10 +402,6 @@ $APPLICATION->SetPageProperty('og_description','Мы проводим судеб
       <div class="col-md-10 col-lg-8 text-center">
         <h6 class="wow fadeInUpSmall">профессиональный статус</h6>
         <h2 class="wow fadeInUpSmall" data-wow-delay=".1s">Аккредитации и членство в СРО</h2>
-        <p class="wow fadeInUpSmall" data-wow-delay=".2s">
-          Профессиональный статус БЭСТ подтверждается аккредитацией в сфере судебной экспертизы
-          и членством в СРО в области инженерных изысканий.
-        </p>
       </div>
     </div>
 

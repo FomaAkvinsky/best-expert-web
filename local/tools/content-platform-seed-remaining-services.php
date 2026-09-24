@@ -244,6 +244,13 @@ function syncBlock(
         'CTA_LABEL' => $definition['cta_label'] ?? '',
         'CTA_URL' => $definition['cta_url'] ?? '',
         'DOCUMENTS' => $definition['documents'] ?? [],
+        'SECTION_CLASS' => $definition['section_class'] ?? '',
+        'CONTAINER_CLASS' => $definition['container_class'] ?? '',
+        'HEADING_ROW_CLASS' => $definition['heading_row_class'] ?? '',
+        'HEADING_COL_CLASS' => $definition['heading_col_class'] ?? '',
+        'TITLE_CLASS' => $definition['title_class'] ?? '',
+        'CONTENT_ROW_CLASS' => $definition['content_row_class'] ?? '',
+        'CONTENT_COL_CLASS' => $definition['content_col_class'] ?? '',
     ];
 
     if (!empty($definition['layout'])) {
@@ -339,6 +346,7 @@ $services = [
             [
                 'code' => 'engineering-tasks',
                 'sort' => 200,
+                'section_class' => 'section section-lg pb-4 bg-white',
                 'name' => 'Оборудование, механизмы и конструкторская документация',
                 'type' => 'cards',
                 'eyebrow' => 'что мы делаем',
@@ -360,6 +368,7 @@ $services = [
             [
                 'code' => 'engineering-objects',
                 'sort' => 300,
+                'section_class' => 'section pt-4 pb-4 bg-white',
                 'name' => 'Объекты инженерно-технической экспертизы оборудования',
                 'type' => 'cards',
                 'view' => 'link-boxes-compact',
@@ -384,6 +393,7 @@ $services = [
             [
                 'code' => 'engineering-findings',
                 'sort' => 400,
+                'section_class' => 'section pt-4 pb-4 bg-white',
                 'name' => 'Техническое состояние оборудования и причины отказов',
                 'type' => 'cards',
                 'layout' => '2',
@@ -401,6 +411,7 @@ $services = [
             [
                 'code' => 'engineering-methods',
                 'sort' => 500,
+                'section_class' => 'section pt-4 pb-4 bg-white',
                 'name' => 'Методы инженерно-технической экспертизы оборудования',
                 'type' => 'list',
                 'intro' => 'Состав методов определяется объектом, характером неисправности и поставленными вопросами. Документальное исследование при необходимости дополняется осмотром, измерениями, расчетами и инструментальной диагностикой.',
@@ -491,6 +502,7 @@ $services = [
             [
                 'code' => 'engineering-design-docs',
                 'sort' => 800,
+                'section_class' => 'section pt-4 pb-4 bg-white',
                 'name' => 'Экспертиза конструкторской документации и оценка стоимости разработки КД',
                 'type' => 'list',
                 'intro' => 'Эксперты БЭСТ исследуют существующую конструкторскую документацию и определяют объем инженерных работ, необходимых для ее разработки, восстановления, актуализации или переработки. При необходимости оценивается возможность обратного проектирования по существующему изделию или оборудованию.',
@@ -517,6 +529,7 @@ $services = [
             [
                 'code' => 'engineering-status',
                 'sort' => 1000,
+                'content_row_class' => 'row row-30',
                 'name' => 'Профессиональный статус БЭСТ',
                 'type' => 'status',
                 'eyebrow' => 'профессиональный статус',

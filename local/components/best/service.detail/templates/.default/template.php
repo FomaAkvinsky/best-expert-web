@@ -8,6 +8,14 @@ $service = $arResult['SERVICE'];
 $section = $arResult['SECTION'];
 $properties = $service['PROPERTIES'];
 $heroSubtitle = trim((string)($properties['HERO_SUBTITLE']['VALUE'] ?? ''));
+
+if (!function_exists('bestServiceBlockClass')) {
+    function bestServiceBlockClass(array $block, string $propertyCode, string $default = ''): string
+    {
+        $value = trim((string)($block['PROPERTIES'][$propertyCode]['VALUE'] ?? ''));
+        return $value !== '' ? $value : $default;
+    }
+}
 ?>
 
 <section class="section parallax-container section-md bg-gray-700 section-overlay-3"

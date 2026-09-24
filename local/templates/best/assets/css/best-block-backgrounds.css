@@ -1,0 +1,119 @@
+/* Decorative background illustrations for semantic service blocks. */
+.best-block-art-section {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.best-block-art-section > .container,
+.best-block-art-section > .parallax-content,
+.best-block-art-section > #particles-js {
+  position: relative;
+}
+
+.best-block-art-section > .container,
+.best-block-art-section > .parallax-content {
+  z-index: 2;
+}
+
+.best-block-art-section > #particles-js {
+  z-index: 1;
+}
+
+.best-block-art {
+  --best-block-art-width: 44%;
+  --best-block-art-opacity: 1;
+
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--best-block-art-width);
+  display: flex;
+  pointer-events: none;
+  z-index: 0;
+  opacity: var(--best-block-art-opacity);
+}
+
+.best-block-art--right {
+  right: 0;
+  justify-content: flex-end;
+}
+
+.best-block-art--left {
+  left: 0;
+  justify-content: flex-start;
+}
+
+.best-block-art--top {
+  align-items: flex-start;
+}
+
+.best-block-art--center {
+  align-items: center;
+}
+
+.best-block-art--bottom {
+  align-items: flex-end;
+}
+
+.best-block-art img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Fade the illustration towards the text side. */
+.best-block-art--right.best-block-art--fade-soft img {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 22%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 22%, #000 100%);
+}
+
+.best-block-art--left.best-block-art--fade-soft img {
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 22%, #000 100%);
+  mask-image: linear-gradient(to left, transparent 0%, #000 22%, #000 100%);
+}
+
+.best-block-art--right.best-block-art--fade-medium img {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 38%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 38%, #000 100%);
+}
+
+.best-block-art--left.best-block-art--fade-medium img {
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, #000 38%, #000 100%);
+  mask-image: linear-gradient(to left, transparent 0%, #000 38%, #000 100%);
+}
+
+.best-block-art--right.best-block-art--fade-strong img {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 14%, #000 58%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 14%, #000 58%, #000 100%);
+}
+
+.best-block-art--left.best-block-art--fade-strong img {
+  -webkit-mask-image: linear-gradient(to left, transparent 0%, transparent 14%, #000 58%, #000 100%);
+  mask-image: linear-gradient(to left, transparent 0%, transparent 14%, #000 58%, #000 100%);
+}
+
+.best-block-art--fade-none img {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+@media (max-width: 991.98px) {
+  .best-block-art {
+    --best-block-art-width: min(var(--best-block-art-width), 48%);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .best-block-art--mobile-hide {
+    display: none;
+  }
+
+  .best-block-art--mobile-show {
+    width: min(var(--best-block-art-width), 68%);
+    opacity: calc(var(--best-block-art-opacity) * .5);
+  }
+}

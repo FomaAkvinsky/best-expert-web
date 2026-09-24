@@ -2,15 +2,21 @@
 $props = $block['PROPERTIES'];
 $eyebrow = trim((string)($props['EYEBROW']['VALUE'] ?? ''));
 $intro = trim((string)($props['INTRO']['VALUE'] ?? ''));
+$sectionClass = bestServiceBlockClass($block, 'SECTION_CLASS', 'section section-lg bg-white');
+$containerClass = bestServiceBlockClass($block, 'CONTAINER_CLASS', 'container');
+$headingRowClass = bestServiceBlockClass($block, 'HEADING_ROW_CLASS', 'row justify-content-center');
+$headingColClass = bestServiceBlockClass($block, 'HEADING_COL_CLASS', 'col-md-10 col-lg-8 text-center');
+$titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', 'wow fadeInUpSmall');
+$contentRowClass = bestServiceBlockClass($block, 'CONTENT_ROW_CLASS', 'row row-30');
 ?>
-<section class="section section-lg bg-white">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-10 col-lg-8 text-center">
+<section class="<?=htmlspecialcharsbx($sectionClass)?>">
+  <div class="<?=htmlspecialcharsbx($containerClass)?>">
+    <div class="<?=htmlspecialcharsbx($headingRowClass)?>">
+      <div class="<?=htmlspecialcharsbx($headingColClass)?>">
         <?php if ($eyebrow !== ''): ?>
           <h6 class="wow fadeInUpSmall"><?=htmlspecialcharsbx($eyebrow)?></h6>
         <?php endif; ?>
-        <h2 class="wow fadeInUpSmall" data-wow-delay=".1s"><?=htmlspecialcharsbx($block['NAME'])?></h2>
+        <h2 class="<?=htmlspecialcharsbx($titleClass)?>" data-wow-delay=".1s"><?=htmlspecialcharsbx($block['NAME'])?></h2>
         <?php if ($intro !== ''): ?>
           <p class="wow fadeInUpSmall" data-wow-delay=".2s"><?=nl2br(htmlspecialcharsbx($intro))?></p>
         <?php endif; ?>
@@ -18,7 +24,7 @@ $intro = trim((string)($props['INTRO']['VALUE'] ?? ''));
     </div>
 
     <?php if ($block['DOCUMENT_ITEMS']): ?>
-      <div class="row row-30 justify-content-center">
+      <div class="<?=htmlspecialcharsbx($contentRowClass)?>">
         <?php foreach ($block['DOCUMENT_ITEMS'] as $index => $document): ?>
           <?php
           $dp = $document['PROPERTIES'];

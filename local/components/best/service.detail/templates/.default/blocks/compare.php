@@ -2,12 +2,18 @@
 $props = $block['PROPERTIES'];
 $items = (array)($props['ITEMS']['VALUE'] ?? []);
 $descriptions = (array)($props['ITEMS']['DESCRIPTION'] ?? []);
+
+$sectionClass = bestServiceBlockClass($block, 'SECTION_CLASS', 'section section-lg bg-gray-100');
+$containerClass = bestServiceBlockClass($block, 'CONTAINER_CLASS', 'container');
+$contentRowClass = bestServiceBlockClass($block, 'CONTENT_ROW_CLASS', 'row justify-content-center');
+$contentColClass = bestServiceBlockClass($block, 'CONTENT_COL_CLASS', 'col-md-10 col-lg-9');
+$titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', '');
 ?>
-<section class="section section-lg bg-gray-100">
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-10 col-lg-9">
-        <h2><?=htmlspecialcharsbx($block['NAME'])?></h2>
+<section class="<?=htmlspecialcharsbx($sectionClass)?>">
+  <div class="<?=htmlspecialcharsbx($containerClass)?>">
+    <div class="<?=htmlspecialcharsbx($contentRowClass)?>">
+      <div class="<?=htmlspecialcharsbx($contentColClass)?>">
+        <h2<?php if ($titleClass !== ''): ?> class="<?=htmlspecialcharsbx($titleClass)?>"<?php endif; ?>><?=htmlspecialcharsbx($block['NAME'])?></h2>
         <?php if (!empty($props['INTRO']['VALUE'])): ?>
           <p><?=nl2br(htmlspecialcharsbx((string)$props['INTRO']['VALUE']))?></p>
         <?php endif; ?>
@@ -23,6 +29,9 @@ $descriptions = (array)($props['ITEMS']['DESCRIPTION'] ?? []);
             </div>
           <?php endforeach; ?>
         </div>
+        <?php if (!empty($block['DETAIL_TEXT'])): ?>
+          <div class="mt-4"><?=$block['DETAIL_TEXT']?></div>
+        <?php endif; ?>
       </div>
     </div>
   </div>

@@ -27,20 +27,33 @@ if ($blockCode === 'construction-methods') {
     $compactColumnClass = 'col-xl-9 wow fadeInUpSmall';
 }
 
+$sectionOverride = bestServiceBlockClass($block, 'SECTION_CLASS', '');
+$containerClass = bestServiceBlockClass($block, 'CONTAINER_CLASS', 'container');
+$headingRowClass = bestServiceBlockClass($block, 'HEADING_ROW_CLASS', 'row justify-content-center');
+$headingColClass = bestServiceBlockClass($block, 'HEADING_COL_CLASS', 'col-md-10 col-lg-8 text-center');
+$titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', 'wow fadeInUpSmall');
+$contentRowClass = bestServiceBlockClass($block, 'CONTENT_ROW_CLASS', '');
+$contentColClass = bestServiceBlockClass($block, 'CONTENT_COL_CLASS', '');
+
+if ($sectionOverride !== '') {
+    $mainSectionClass = $sectionOverride;
+    $compactSectionClass = $sectionOverride;
+}
+
 if ($view === 'link-boxes-main'):
 ?>
 <section class="<?=htmlspecialcharsbx($mainSectionClass)?>">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-8 text-center">
+    <div class="<?=htmlspecialcharsbx($containerClass)?>">
+        <div class="<?=htmlspecialcharsbx($headingRowClass)?>">
+            <div class="<?=htmlspecialcharsbx($headingColClass)?>">
                 <?php if ($eyebrow !== ''): ?><h6 class="wow fadeInUpSmall"><?=htmlspecialcharsbx($eyebrow)?></h6><?php endif; ?>
-                <h2 class="wow fadeInUpSmall" data-wow-delay=".1s"><?=htmlspecialcharsbx($block['NAME'])?></h2>
+                <h2 class="<?=htmlspecialcharsbx($titleClass)?>" data-wow-delay=".1s"><?=htmlspecialcharsbx($block['NAME'])?></h2>
                 <?php if ($intro !== ''): ?><p class="wow fadeInUpSmall" data-wow-delay=".2s"><?=nl2br(htmlspecialcharsbx($intro))?></p><?php endif; ?>
             </div>
         </div>
 
-        <div class="row row-50">
-            <div class="col-xl-9 wow fadeInUpSmall">
+        <div class="<?=htmlspecialcharsbx($contentRowClass !== '' ? $contentRowClass : 'row row-50')?>">
+            <div class="<?=htmlspecialcharsbx($contentColClass !== '' ? $contentColClass : 'col-xl-9 wow fadeInUpSmall')?>">
                 <?php if ($subtitle !== ''): ?><h3 class="h4"><?=htmlspecialcharsbx($subtitle)?></h3><?php endif; ?>
                 <?php if ($subintro !== ''): ?><p><?=nl2br(htmlspecialcharsbx($subintro))?></p><?php endif; ?>
 
@@ -69,10 +82,10 @@ if ($view === 'link-boxes-main'):
 <?php elseif ($view === 'link-boxes-compact'): ?>
 
 <section class="<?=htmlspecialcharsbx($compactSectionClass)?>">
-    <div class="container">
-        <div class="row mb-5">
-            <div class="<?=htmlspecialcharsbx($compactColumnClass)?>">
-                <h3 class="h4"><?=htmlspecialcharsbx($block['NAME'])?></h3>
+    <div class="<?=htmlspecialcharsbx($containerClass)?>">
+        <div class="<?=htmlspecialcharsbx($contentRowClass !== '' ? $contentRowClass : 'row mb-5')?>">
+            <div class="<?=htmlspecialcharsbx($contentColClass !== '' ? $contentColClass : $compactColumnClass)?>">
+                <h3 class="<?=htmlspecialcharsbx(bestServiceBlockClass($block, 'TITLE_CLASS', 'h4'))?>"><?=htmlspecialcharsbx($block['NAME'])?></h3>
                 <?php if ($intro !== ''): ?><p><?=nl2br(htmlspecialcharsbx($intro))?></p><?php endif; ?>
 
                 <div class="row row-30">
@@ -103,19 +116,19 @@ if ($view === 'link-boxes-main'):
 
 <?php else: ?>
 
-<section class="section section-lg bg-white">
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-10 col-lg-8 text-center">
+<section class="<?=htmlspecialcharsbx($sectionOverride !== '' ? $sectionOverride : 'section section-lg bg-white')?>">
+    <div class="<?=htmlspecialcharsbx($containerClass)?>">
+        <div class="<?=htmlspecialcharsbx($headingRowClass)?>">
+            <div class="<?=htmlspecialcharsbx($headingColClass)?>">
                 <?php if ($eyebrow !== ''): ?><h6 class="wow fadeInUpSmall"><?=htmlspecialcharsbx($eyebrow)?></h6><?php endif; ?>
-                <h2 class="wow fadeInUpSmall" data-wow-delay=".1s"><?=htmlspecialcharsbx($block['NAME'])?></h2>
+                <h2 class="<?=htmlspecialcharsbx($titleClass)?>" data-wow-delay=".1s"><?=htmlspecialcharsbx($block['NAME'])?></h2>
                 <?php if ($intro !== ''): ?><p class="wow fadeInUpSmall" data-wow-delay=".2s"><?=nl2br(htmlspecialcharsbx($intro))?></p><?php endif; ?>
             </div>
         </div>
 
-        <div class="row row-30 justify-content-center">
+        <div class="<?=htmlspecialcharsbx($contentRowClass !== '' ? $contentRowClass : 'row row-30 justify-content-center')?>">
             <?php foreach ($items as $i => $title): ?>
-                <div class="col-md-10 col-lg-<?=$col?> wow fadeInUpSmall">
+                <div class="<?=htmlspecialcharsbx($contentColClass !== '' ? $contentColClass : 'col-md-10 col-lg-' . $col . ' wow fadeInUpSmall')?>">
                     <div class="services-divider__card h-100">
                         <h3 class="h5 mb-3"><?=htmlspecialcharsbx((string)$title)?></h3>
                         <?php if (!empty($descriptions[$i])): ?>

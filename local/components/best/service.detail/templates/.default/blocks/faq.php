@@ -14,7 +14,7 @@ $containerClass = bestServiceBlockClass($block, 'CONTAINER_CLASS', 'container');
 $contentRowClass = bestServiceBlockClass($block, 'CONTENT_ROW_CLASS', 'row row-40 justify-content-center');
 $titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', '');
 ?>
-<section class="<?=htmlspecialcharsbx($sectionClass)?>">
+<?php bestServiceBlockSectionStart($block, $sectionClass); ?>
     <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="<?=htmlspecialcharsbx($contentRowClass)?>">
             <div class="col-md-10 col-lg-6 wow fadeInUpSmall">

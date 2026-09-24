@@ -11,7 +11,7 @@ $titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', '');
 $contentRowClass = bestServiceBlockClass($block, 'CONTENT_ROW_CLASS', 'row justify-content-center');
 $contentColClass = bestServiceBlockClass($block, 'CONTENT_COL_CLASS', 'col-md-10 col-lg-9');
 ?>
-<section class="<?=htmlspecialcharsbx($sectionClass)?>">
+<?php bestServiceBlockSectionStart($block, $sectionClass); ?>
     <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="<?=htmlspecialcharsbx($headingRowClass)?>">
             <div class="<?=htmlspecialcharsbx($headingColClass)?>">

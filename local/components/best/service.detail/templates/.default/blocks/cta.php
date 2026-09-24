@@ -8,7 +8,7 @@ $containerClass = bestServiceBlockClass($block, 'CONTAINER_CLASS', 'container');
 $contentRowClass = bestServiceBlockClass($block, 'CONTENT_ROW_CLASS', 'row justify-content-center justify-content-xl-between align-items-center');
 $titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', 'wow fadeInLeftSmall');
 ?>
-<section class="<?=htmlspecialcharsbx($sectionClass)?>">
+<?php bestServiceBlockSectionStart($block, $sectionClass); ?>
     <div id="particles-js"></div>
     <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="<?=htmlspecialcharsbx($contentRowClass)?>">

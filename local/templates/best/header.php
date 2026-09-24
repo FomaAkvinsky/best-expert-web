@@ -11,6 +11,7 @@ $asset = Asset::getInstance();
 $asset->addCss(SITE_TEMPLATE_PATH . '/assets/css/fonts.css');
 $asset->addCss(SITE_TEMPLATE_PATH . '/assets/css/bootstrap.css');
 $asset->addCss(SITE_TEMPLATE_PATH . '/assets/css/style.css');
+$asset->addCss(SITE_TEMPLATE_PATH . '/assets/css/best-block-backgrounds.css');
 ?>
 <!DOCTYPE html>
 <html class="wide wow-animation" lang="ru">

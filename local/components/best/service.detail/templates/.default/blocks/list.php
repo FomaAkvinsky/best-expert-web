@@ -8,7 +8,7 @@ $contentRowClass = bestServiceBlockClass($block, 'CONTENT_ROW_CLASS', 'row justi
 $contentColClass = bestServiceBlockClass($block, 'CONTENT_COL_CLASS', 'col-md-10 col-lg-9');
 $titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', '');
 ?>
-<section class="<?=htmlspecialcharsbx($sectionClass)?>">
+<?php bestServiceBlockSectionStart($block, $sectionClass); ?>
     <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="<?=htmlspecialcharsbx($contentRowClass)?>">
             <div class="<?=htmlspecialcharsbx($contentColClass)?>">

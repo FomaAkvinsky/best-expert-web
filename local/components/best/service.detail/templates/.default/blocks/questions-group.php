@@ -15,7 +15,7 @@ $contentRowClass = bestServiceBlockClass($first, 'CONTENT_ROW_CLASS', 'row row-3
 $contentColClass = bestServiceBlockClass($first, 'CONTENT_COL_CLASS', 'col-md-10 col-lg-6 wow fadeInUpSmall');
 ?>
 
-<section class="<?=htmlspecialcharsbx($sectionClass)?>">
+<?php bestServiceBlockSectionStart($first, $sectionClass); ?>
     <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="<?=htmlspecialcharsbx($headingRowClass)?>">
             <div class="<?=htmlspecialcharsbx($headingColClass)?>">

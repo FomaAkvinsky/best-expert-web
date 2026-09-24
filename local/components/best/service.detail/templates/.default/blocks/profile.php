@@ -7,7 +7,7 @@ $sectionClass = bestServiceBlockClass($block, 'SECTION_CLASS', 'bg-gray-100 py-4
 $containerClass = bestServiceBlockClass($block, 'CONTAINER_CLASS', 'container');
 $titleClass = bestServiceBlockClass($block, 'TITLE_CLASS', 'profile-light__title');
 ?>
-<section class="<?=htmlspecialcharsbx($sectionClass)?>"<?=$anchor ? ' id="'.htmlspecialcharsbx($anchor).'"' : ''?>>
+<?php bestServiceBlockSectionStart($block, $sectionClass, $anchor ? ' id="' . htmlspecialcharsbx($anchor) . '"' : ''); ?>
     <div class="<?=htmlspecialcharsbx($containerClass)?>">
         <div class="profile-light">
             <div class="profile-light__main">

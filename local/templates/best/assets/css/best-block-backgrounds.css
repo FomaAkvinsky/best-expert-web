@@ -6,13 +6,8 @@
 }
 
 .best-block-art-section > .container,
-.best-block-art-section > .parallax-content,
-.best-block-art-section > #particles-js {
-  position: relative;
-}
-
-.best-block-art-section > .container,
 .best-block-art-section > .parallax-content {
+  position: relative;
   z-index: 2;
 }
 

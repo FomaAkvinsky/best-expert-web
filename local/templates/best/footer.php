@@ -17,9 +17,9 @@ $asset->addJs(SITE_TEMPLATE_PATH . '/assets/js/script.js');
         <div class="footer-status">
           <div class="row align-items-center row-30">
             <div class="col-lg-4">
-              <a class="footer-status__title" href="/accreditation/">
-                Аккредитации и членство в СРО
-              </a>
+              <div class="footer-status__title">
+                Экспертиза будущего. Уже сейчас.
+              </div>
             </div>
 
             <div class="col-lg-8">

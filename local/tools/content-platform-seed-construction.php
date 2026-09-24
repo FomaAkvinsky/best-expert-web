@@ -484,8 +484,9 @@ $blocks = [
     [
         'code' => 'construction-status',
         'sort' => 700,
-        'name' => 'Профессиональный статус',
+        'name' => 'Аккредитации и членство в СРО',
         'type' => 'status',
+        'eyebrow' => 'профессиональный статус',
         'intro' => '',
         'documents' => [$feseDocumentId, $sroDocumentId],
     ],

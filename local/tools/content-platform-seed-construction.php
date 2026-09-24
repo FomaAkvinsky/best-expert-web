@@ -241,6 +241,9 @@ function syncBlock(
         'EYEBROW' => $definition['eyebrow'] ?? '',
         'INTRO' => $definition['intro'] ?? '',
         'ITEMS' => !empty($definition['items']) ? describedItems($definition['items']) : [],
+        'FAQ_ANSWERS' => (($definition['type'] ?? '') === 'faq' && !empty($definition['items']))
+            ? array_map(static fn($item) => (string)($item[1] ?? ''), $definition['items'])
+            : [],
         'ITEM_ICONS' => $definition['icons'] ?? [],
         'SUBTITLE' => $definition['subtitle'] ?? '',
         'SUBINTRO' => $definition['subintro'] ?? '',

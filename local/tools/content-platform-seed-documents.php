@@ -155,7 +155,28 @@ function ensureDocument(int $iblockId, array $definition, bool $apply): void
     $existing = findElement($iblockId, $definition['CODE']);
 
     if ($existing) {
-        out(sprintf('[ok] %s (#%d)', $definition['CODE'], $existing['ID']));
+        out(sprintf('[sync] %s (#%d)', $definition['CODE'], $existing['ID']));
+
+        if (!$apply) {
+            return;
+        }
+
+        $element = new CIBlockElement();
+        $ok = $element->Update((int)$existing['ID'], [
+            'ACTIVE' => 'Y',
+            'SORT' => $definition['SORT'],
+            'NAME' => $definition['NAME'],
+            'PREVIEW_TEXT' => $definition['PREVIEW_TEXT'],
+            'PREVIEW_TEXT_TYPE' => 'html',
+            'DETAIL_TEXT' => $definition['DETAIL_TEXT'],
+            'DETAIL_TEXT_TYPE' => 'html',
+        ]);
+
+        if (!$ok) {
+            fail($element->LAST_ERROR ?: 'Cannot update document ' . $definition['CODE']);
+        }
+
+        CIBlockElement::SetPropertyValuesEx((int)$existing['ID'], $iblockId, $definition['PROPERTIES']);
         return;
     }
 
@@ -212,7 +233,7 @@ $documents = [
         'SORT' => 200,
         'NAME' => 'Членство в СРО в области инженерных изысканий',
         'PREVIEW_TEXT' => '<p>ООО «БЭСТ» является членом Ассоциации «Национальное объединение изыскателей „Альянс Развитие“». Сведения об организации включены в Единый реестр НОПРИЗ.</p>',
-        'DETAIL_TEXT' => '<p>Регистрационный номер члена СРО: <strong>И-046-007734396380-1421</strong>. Дата вступления: 18 сентября 2026 года.</p><p>Организация имеет право выполнять инженерные изыскания в отношении объектов капитального строительства, за исключением особо опасных, технически сложных и уникальных объектов и объектов использования атомной энергии. Уровень ответственности по компенсационному фонду возмещения вреда — первый; стоимость обязательств по одному договору не превышает 25 млн рублей.</p>',
+        'DETAIL_TEXT' => '<p>Регистрационный номер члена СРО: <strong>И-046-007734396380-1421</strong>. Дата вступления: 18 сентября 2026 года.</p>',
         'PROPERTIES' => [
             'DOC_TYPE' => $types['sro'],
             'NUMBER' => 'И-046-007734396380-1421',

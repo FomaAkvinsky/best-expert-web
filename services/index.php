@@ -134,7 +134,7 @@ $APPLICATION->SetPageProperty('og_description','Судебные эксперт�
         <div class="row row-30">
 
           <div class="col-12">
-            <a class="link-box" style="max-width:100%" href="#" onclick="return false;">
+            <a class="link-box" style="max-width:100%" href="/services/sudebnye-ekspertizy/ocenochnaya-ekspertiza/">
               <span class="icon link-box__icon linearicons-chart-bars"></span>
               <div class="link-box__main">
                 <h4>Оценочные и финансово-экономические экспертизы</h4>
